@@ -1,0 +1,80 @@
+:root{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+
+    --fonte-clara: #ffffff;
+    --fonte-escura: #000;
+    --color-1: #ffffea;
+    --color2: #a795a5;
+    --color3: #7a959e;
+    --janela-fundo: #424e5e;
+    --borda: #3b2b46; 
+}
+
+header{
+    top:0;
+    position: fixed;
+    border: 1px solid var(--borda);
+    padding: .5rem 0;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;    
+    justify-content: space-between;
+    color: var(--fonte-clara);
+    background-color: var(--janela-fundo);
+
+    form{
+        label{
+            padding: 0 .5rem;
+        }
+
+        input{
+            margin: 0 .5rem;
+            color: var(--fonte-escura);
+            background-color: var(--color-1);
+        }
+/*
+        #veiculo{
+            width: 50rem;
+        }
+
+        #km{
+            width: 7rem;
+        }
+*/
+    }  
+} 
+
+table{
+    position: relative;
+    top: 5rem;
+    margin: auto;
+    thead{
+        background-color: var(--janela-fundo);
+        color: var(--fonte-clara);
+    }
+}
+
+
+.menu-lateral{
+    background-color: aqua;
+    position: relative;
+    top: 10rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-lateral form div{
+    width:25%;
+    background-color: #7a959e;
+}
+
+.veiculo{
+    width:60%;
+    background-color: brown;
+}
+
+.demais-campos{
+    width: 40%;
+    background-color: blue;
+}
