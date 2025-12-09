@@ -7,68 +7,24 @@
     <title>Manutenção de veículos</title>
 </head>
 <body>
-    <header>
-        <form action="" method="post" class="veiculo">
+    <header class="sombra">
+        <form action="" method="post" class="form-veiculo">
             <label for="veiculo">Veículo:</label>
             <input type="text" id="veiculo" name ="veiculo">
         </form>
-        <form action="" class="demais-campos">
-            <label for="data">data:</label>
-            <input type="date" id="data" name ="data">
-            <label for="km">Quilometragem:</label>
-            <input type="number" name="km" id="km">
+        <form action=""  class="form-info">
+            <div class="form-info-col">
+                <label for="data">data:</label>
+                <input type="date" id="data" name ="data">
+            </div>
+            <div class="form-info-col">
+                <label for="km">Quilometragem:</label>
+                <input type="number" name="km" id="km">
+            </div>
         </form>
     </header>
-    
-    <table>
-        <thead>
-            <tr>
-                <th rowspan="2">Item de manutenção</th>
-                <th colspan="2">Especificação</th>
-                <th colspan="2">Última troca</th>
-                <th colspan="2">Próxima troca</th>
-            </tr>
-            <tr>
-                <th>km</th>
-                <th>prazo(meses)</th>
-                <th>km</th>
-                <th>data</th>
-                <th>km</th>
-                <th>data</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Óleo lubrificante</td>
-                <td>10000</td>
-                <td>12</td>
-                <td>9000</td>
-                <td>20/10/2024</td>
-                <td>19000</td>
-                <td>20/10/2025</td>
-            </tr>
-            <tr>
-                <td>Pastilha de freio</td>
-                <td>25000</td>
-                <td>24</td>
-                <td>20000</td>
-                <td>15/08/2023</td>
-                <td>45000</td>
-                <td>17/08/2025</td>
-            </tr>
-            <tr>
-                <td>Correia do motor</td>
-                <td>50000</td>
-                <td>60</td>
-                <td>0</td>
-                <td>02/06/2021</td>
-                <td>50000</td>
-                <td>02/06/2026</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <section class="menu-lateral">
+    <section class="menu-lateral sombra">
         <form action="">
             <div>
                 <label for="item">Item:</label>
@@ -92,5 +48,55 @@
             </div>
         </form>
     </section>
+
+    <div class="corpo">
+    <table class="sombra">
+        <thead>
+            <tr>
+                <th rowspan="2" class="esquerda">Item de manutenção</th>
+                <th colspan="2">Trocar a cada</th>
+                <th colspan="2">Última troca</th>
+                <th colspan="2">Próxima troca</th>
+            </tr>
+            <tr>
+                <th>km</th>
+                <th>meses</th>
+                <th>km</th>
+                <th>data</th>
+                <th>km</th>
+                <th>data</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="esquerda">Óleo lubrificante</td>
+                <td>10000</td>
+                <td>12</td>
+                <td>9000</td>
+                <td class="centro">20/10/2024</td>
+                <td>19000</td>
+                <td class="centro">20/10/2025</td>
+            </tr>
+            <tr>
+                <td class="esquerda">Pastilha de freio</td>
+                <td>25000</td>
+                <td>24</td>
+                <td>20000</td>
+                <td class="centro">15/08/2023</td>
+                <td>45000</td>
+                <td class="centro">17/08/2025</td>
+            </tr>
+            <tr>
+                <td class="esquerda">Correia do motor</td>
+                <td>50000</td>
+                <td>60</td>
+                <td>0</td>
+                <td class="centro">02/06/2021</td>
+                <td>50000</td>
+                <td class="centro">02/06/2026</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 </body>
 </html>
