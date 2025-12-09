@@ -7,6 +7,7 @@
     <title>Manutenção de veículos</title>
 </head>
 <body>
+    <div class="container">
     <header class="sombra borda">
         <form action="" method="post" class="form-veiculo">
             <label for="veiculo">Veículo:</label>
@@ -50,35 +51,37 @@
     </section>
 
     <section class="corpo">
-        <table class="sombra borda">
+        <div class="sem-scroll sombra borda">
+        <table class="">
             <thead>
                 <tr>
-                    <th rowspan="2" class="esquerda">Item de manutenção</th>
+                    <th rowspan="2" class="esquerda item">Item de manutenção</th>
                     <th colspan="2">Trocar a cada</th>
                     <th colspan="2">Última troca</th>
                     <th colspan="2">Próxima troca</th>
                 </tr>
                 <tr>
-                    <th>km</th>
-                    <th>meses</th>
-                    <th>km</th>
-                    <th>data</th>
-                    <th>km</th>
-                    <th>data</th>
+                    <th class="km">km</th>
+                    <th class="prazo">meses</th>
+                    <th class="km">km</th>
+                    <th class="data">data</th>
+                    <th class="km">km</th>
+                    <th class="data">data</th>
                 </tr>
             </thead>
         </table>
-        <div class="scroll">
-            <table  class="sombra borda">
+        </div>
+        <div class="scroll sombra borda">
+            <table  class="">
                 <tbody>
                     <tr>
-                        <td class="esquerda">Óleo lubrificante</td>
-                        <td>10000</td>
-                        <td>12</td>
-                        <td>9000</td>
-                        <td class="centro">20/10/2024</td>
-                        <td>19000</td>
-                        <td class="centro">20/10/2025</td>
+                        <td class="esquerda item">Óleo lubrificante</td>
+                        <td class="km">10000</td>
+                        <td class="prazo">12</td>
+                        <td class="km">9000</td>
+                        <td class="centro data">20/10/2024</td>
+                        <td class="km">19000</td>
+                        <td class="centro data">20/10/2025</td>
                     </tr>
                     <tr>
                         <td class="esquerda">Pastilha de freio</td>
@@ -267,5 +270,6 @@
             </table>
         </div>
     </section>
+    </div>
 </body>
 </html>
