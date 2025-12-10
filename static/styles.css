@@ -41,6 +41,7 @@ input{
     color: var(--fonte-escura);
     background-color: var(--input-fundo);
     border: 1px solid var(--borda);
+    border-radius: 6px;
     height: 2rem;
 }
 
@@ -79,7 +80,6 @@ header{
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
-    background-color: #595959;
     min-width: 30rem;
     width: 25%;
 }
@@ -96,11 +96,27 @@ header{
     grid-row: row-start 2 / span 11;
 }
 
+.scroll{
+    min-width: 50rem;
+    height: 73vh;
+    overflow-y:auto;
+    scrollbar-gutter:stable;
+    gap:0;
+}
+
+.sem-scroll{
+    min-width: 50rem;
+    overflow-y: hidden;
+    scrollbar-gutter:stable;;
+    margin-bottom: 0;
+    gap: 0;
+    background-color: var(--tabela-cabecalho);
+}
+
 table{
     width: 100%;
-    border-collapse:separate;
+
     thead{
-    background-color: var(--tabela-cabecalho);
         color: var(--fonte-escura);
         border: none;
 
@@ -113,6 +129,7 @@ table{
 
     tbody{
         background-color: var(--tabela-fundo);
+
         tr:hover{
         background-color: var(--tabela-destaque);
         }
@@ -138,23 +155,6 @@ table{
 
 .centro{
     text-align: center;
-}
-
-
-.scroll{
-    min-width: 50rem;
-    height: 73vh;
-    overflow-y:auto;
-    scrollbar-gutter:stable;
-    gap:0;
-}
-
-.sem-scroll{
-    min-width: 50rem;
-    overflow-y: hidden;
-    scrollbar-gutter:stable;;
-    margin-bottom: 0;
-    gap: 0;
 }
 
 .menu-lateral{
@@ -193,8 +193,66 @@ table{
 }
 
 .prazo{
-    width: 5rem;
+    min-width: 5rem;
     width: 7rem;
+}
+
+.acoes{
+    min-width: 5rem;
+    width: 7rem;
+}
+
+.card, botao-flutuante{
+    display: none;
+}
+
+.icone{
+      display: inline-flex;
+      width: 1.7rem;
+      height: 1.7rem;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      background-position: center; /* posição do ícone */
+      background-size: 100%;
+    }
+
+.btn{
+      margin-top: .5rem;
+      display: flex;
+      width: 100%;
+      height: 4rem;
+      padding: 0;
+      background-color: var(--tabela-destaque);
+      background-position: center; /* posição do ícone */
+      background-size: 100%;
+      background-repeat: no-repeat;
+      align-items: center;
+      border-radius: 8px;
+
+      img{
+        width: 3rem;
+        height: 3rem;
+
+      }
+    }
+
+
+
+.i-atualizar{
+    background-image: url("./fonts/refresh_48dp_0000F5.svg");
+}
+
+.i-deletar{
+    background-image: url("./fonts/delete_48dp_EA3323.svg");
+}
+
+.i-incluir{
+    background-image: url("./fonts/upgrade_48dp_EA3323.svg");
+}
+
+.i-adicionar{
+    background-image: url("./fonts/add_box_48dp_0000F5.svg");    
 }
 
 /*##################################################################*
@@ -207,49 +265,122 @@ table{
         font-size: 12px;
     }
   
-/*
+
     .container{
+        display: flex;
+        flex-direction: column;
+        /*
         grid-template-columns: auto;
-        grid-template-rows: auto auto auto;
+        grid-template-rows: auto auto;
+        */
     }
     header{
         margin: 0;
+        /*
         grid-column: 1;
         grid-row: 1;
-        flex-flow: column nowrap;
+        */
+        flex-direction: column;
         justify-content: flex-start;
         gap: 0;
-        width: 5vw;
+        height: 9.5rem;
+
+        input, label{
+            margin: 0 .5rem;
+        }
+
+        label{
+            margin-top: .5rem;
+        }
+
+        input{
+            margin-bottom: .5rem;
+        }
     }
 
     .form-veiculo{
-        width: 10rem;
-        background-color:#595959;
-
+        width: 100%;
     }
 
     .form-info{
-        width: 10rem;
-        justify-content: space-between;
-        background-color:aqua;      
+        width: 100%;
+        justify-content: flex-start;
+        min-width: none;
     }
 
     .corpo{
-        margin: 0;
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 0 0 0;
+        height: auto;
+        overflow-y: auto;
+        /*
         grid-column: 1;
         grid-row: 2;
+        */
     }
 
-    .scroll, .sem-scroll {
+    .sem-scroll, table{
         display: none;
+    }
+    .scroll{
+        height: auto;
+        min-width: 1rem;
+        border: none;
+    }
+
+    .card{
+        display: flex;
+        flex-direction: column;
+        margin: 1rem;
+        border-radius: 6px;
+    }
+
+    .card-corpo{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .card-titulo{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: .5rem;
+        font-weight: bold;
+        text-align: left;
+        justify-content: space-between;
+    }
+
+    .card-col{
+        width: 50%;
+        padding: .5rem;
+        text-align: left;
     }
 
     .menu-lateral{
-        margin: 0;
+        position: fixed;
+        top: 30vh;
+        left: 5%;
+        /*
         grid-column: 1;
-        grid-row: 3;
-        width: 5vw;
+        grid-row: 2;
+        */
+        z-index: 50;
+        height: 43vh;
+        width: 90%;
+        margin: auto;
+        border-radius: 6px;
+    }
+
+    .botao-flutuante{
+        width: 8rem;
+        height: 8rem;
+        display: flex;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+
     }
 
  }
-*/
+
