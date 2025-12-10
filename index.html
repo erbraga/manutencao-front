@@ -8,268 +8,268 @@
 </head>
 <body>
     <div class="container">
-    <header class="sombra borda">
-        <form action="" method="post" class="form-veiculo">
-            <label for="veiculo">Veículo:</label>
-            <input type="text" id="veiculo" name ="veiculo">
-        </form>
-        <form action=""  class="form-info">
-            <div class="form-info-col">
-                <label for="data">data:</label>
-                <input type="date" id="data" name ="data">
-            </div>
-            <div class="form-info-col">
-                <label for="km">Quilometragem:</label>
-                <input type="number" name="km" id="km">
-            </div>
-        </form>
-    </header>
+        <header class="sombra borda">
+            <form action="" method="post" class="form-veiculo">
+                <label for="veiculo">Veículo:</label>
+                <input type="text" id="veiculo" name ="veiculo">
+            </form>
+            <form action=""  class="form-info">
+                <div class="form-info-col">
+                    <label for="data">data:</label>
+                    <input type="date" id="data" name ="data">
+                </div>
+                <div class="form-info-col">
+                    <label for="km">Quilometragem:</label>
+                    <input type="number" name="km" id="km">
+                </div>
+            </form>
+        </header>
 
-    <section class="menu-lateral sombra borda">
-        <form action="">
-            <div>
-                <label for="item">Item:</label>
-                <input type="text" id="item">
-            </div>
-            <div>
-                <label for="especificacao-km">Quilometragem para troca</label>
-                <input type="number" name="especificacao-km" id="especificacao-km">
-            </div>
-            <div>
-                <label for="especificacao-prazo">Prazo para troca</label>
-                <input type="number" name="especificacao-prazo" id="especificacao-prazo">
-            </div>
-            <div>
-                <label for="ultima-troca-km">Última troca em</label>
-                <input type="number" name="ultima-troca-km" id="ultima-troca-km">
-            </div>
-            <div>
-                <label for="ultima-troca-data">Próxima troca em</label>
-                <input type="number" name="ultima-troca-data" id="ultima-troca-data">
-            </div>
-        </form>
-    </section>
+        <section class="menu-lateral sombra borda">
+            <form action="">
+                <div>
+                    <label for="item">Item:</label>
+                    <input type="text" id="item">
+                </div>
+                <div>
+                    <label for="especificacao-km">Quilometragem para troca</label>
+                    <input type="number" name="especificacao-km" id="especificacao-km">
+                </div>
+                <div>
+                    <label for="especificacao-prazo">Prazo para troca</label>
+                    <input type="number" name="especificacao-prazo" id="especificacao-prazo">
+                </div>
+                <div>
+                    <label for="ultima-troca-km">Última troca em</label>
+                    <input type="number" name="ultima-troca-km" id="ultima-troca-km">
+                </div>
+                <div>
+                    <label for="ultima-troca-data">Próxima troca em</label>
+                    <input type="number" name="ultima-troca-data" id="ultima-troca-data">
+                </div>
+            </form>
+        </section>
 
-    <section class="corpo">
-        <div class="sem-scroll sombra borda">
-        <table class="">
-            <thead>
-                <tr>
-                    <th rowspan="2" class="esquerda item">Item de manutenção</th>
-                    <th colspan="2">Trocar a cada</th>
-                    <th colspan="2">Última troca</th>
-                    <th colspan="2">Próxima troca</th>
-                </tr>
-                <tr>
-                    <th class="km">km</th>
-                    <th class="prazo">meses</th>
-                    <th class="km">km</th>
-                    <th class="data">data</th>
-                    <th class="km">km</th>
-                    <th class="data">data</th>
-                </tr>
-            </thead>
-        </table>
-        </div>
-        <div class="scroll sombra borda">
-            <table  class="">
-                <tbody>
+        <section class="corpo">
+            <div class="sem-scroll sombra borda">
+            <table class="">
+                <thead>
                     <tr>
-                        <td class="esquerda item">Óleo lubrificante</td>
-                        <td class="km">10000</td>
-                        <td class="prazo">12</td>
-                        <td class="km">9000</td>
-                        <td class="centro data">20/10/2024</td>
-                        <td class="km">19000</td>
-                        <td class="centro data">20/10/2025</td>
+                        <th rowspan="2" class="esquerda item">Item de manutenção</th>
+                        <th colspan="2">Trocar a cada</th>
+                        <th colspan="2">Última troca</th>
+                        <th colspan="2">Próxima troca</th>
                     </tr>
                     <tr>
-                        <td class="esquerda">Pastilha de freio</td>
-                        <td>25000</td>
-                        <td>24</td>
-                        <td>20000</td>
-                        <td class="centro">15/08/2023</td>
-                        <td>45000</td>
-                        <td class="centro">17/08/2025</td>
+                        <th class="km">km</th>
+                        <th class="prazo">meses</th>
+                        <th class="km">km</th>
+                        <th class="data">data</th>
+                        <th class="km">km</th>
+                        <th class="data">data</th>
                     </tr>
-                    <tr>
-                        <td class="esquerda">Correia do motor</td>
-                        <td>50000</td>
-                        <td>60</td>
-                        <td>0</td>
-                        <td class="centro">02/06/2021</td>
-                        <td>50000</td>
-                        <td class="centro">02/06/2026</td>
-                    <tr>
-                        <td class="esquerda">Óleo lubrificante</td>
-                        <td>10000</td>
-                        <td>12</td>
-                        <td>9000</td>
-                        <td class="centro">20/10/2024</td>
-                        <td>19000</td>
-                        <td class="centro">20/10/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Pastilha de freio</td>
-                        <td>25000</td>
-                        <td>24</td>
-                        <td>20000</td>
-                        <td class="centro">15/08/2023</td>
-                        <td>45000</td>
-                        <td class="centro">17/08/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Correia do motor</td>
-                        <td>50000</td>
-                        <td>60</td>
-                        <td>0</td>
-                        <td class="centro">02/06/2021</td>
-                        <td>50000</td>
-                        <td class="centro">02/06/2026</td>
-                    <tr>
-                        <td class="esquerda">Óleo lubrificante</td>
-                        <td>10000</td>
-                        <td>12</td>
-                        <td>9000</td>
-                        <td class="centro">20/10/2024</td>
-                        <td>19000</td>
-                        <td class="centro">20/10/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Pastilha de freio</td>
-                        <td>25000</td>
-                        <td>24</td>
-                        <td>20000</td>
-                        <td class="centro">15/08/2023</td>
-                        <td>45000</td>
-                        <td class="centro">17/08/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Correia do motor</td>
-                        <td>50000</td>
-                        <td>60</td>
-                        <td>0</td>
-                        <td class="centro">02/06/2021</td>
-                        <td>50000</td>
-                        <td class="centro">02/06/2026</td>
-                                        <tr>
-                        <td class="esquerda">Óleo lubrificante</td>
-                        <td>10000</td>
-                        <td>12</td>
-                        <td>9000</td>
-                        <td class="centro">20/10/2024</td>
-                        <td>19000</td>
-                        <td class="centro">20/10/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Pastilha de freio</td>
-                        <td>25000</td>
-                        <td>24</td>
-                        <td>20000</td>
-                        <td class="centro">15/08/2023</td>
-                        <td>45000</td>
-                        <td class="centro">17/08/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Correia do motor</td>
-                        <td>50000</td>
-                        <td>60</td>
-                        <td>0</td>
-                        <td class="centro">02/06/2021</td>
-                        <td>50000</td>
-                        <td class="centro">02/06/2026</td>
-                                        <tr>
-                        <td class="esquerda">Óleo lubrificante</td>
-                        <td>10000</td>
-                        <td>12</td>
-                        <td>9000</td>
-                        <td class="centro">20/10/2024</td>
-                        <td>19000</td>
-                        <td class="centro">20/10/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Pastilha de freio</td>
-                        <td>25000</td>
-                        <td>24</td>
-                        <td>20000</td>
-                        <td class="centro">15/08/2023</td>
-                        <td>45000</td>
-                        <td class="centro">17/08/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Correia do motor</td>
-                        <td>50000</td>
-                        <td>60</td>
-                        <td>0</td>
-                        <td class="centro">02/06/2021</td>
-                        <td>50000</td>
-                        <td class="centro">02/06/2026</td>
-                                        <tr>
-                        <td class="esquerda">Óleo lubrificante</td>
-                        <td>10000</td>
-                        <td>12</td>
-                        <td>9000</td>
-                        <td class="centro">20/10/2024</td>
-                        <td>19000</td>
-                        <td class="centro">20/10/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Pastilha de freio</td>
-                        <td>25000</td>
-                        <td>24</td>
-                        <td>20000</td>
-                        <td class="centro">15/08/2023</td>
-                        <td>45000</td>
-                        <td class="centro">17/08/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Correia do motor</td>
-                        <td>50000</td>
-                        <td>60</td>
-                        <td>0</td>
-                        <td class="centro">02/06/2021</td>
-                        <td>50000</td>
-                        <td class="centro">02/06/2026</td>
-                                        <tr>
-                        <td class="esquerda">Óleo lubrificante</td>
-                        <td>10000</td>
-                        <td>12</td>
-                        <td>9000</td>
-                        <td class="centro">20/10/2024</td>
-                        <td>19000</td>
-                        <td class="centro">20/10/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Pastilha de freio</td>
-                        <td>25000</td>
-                        <td>24</td>
-                        <td>20000</td>
-                        <td class="centro">15/08/2023</td>
-                        <td>45000</td>
-                        <td class="centro">17/08/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Pastilha de freio</td>
-                        <td>25000</td>
-                        <td>24</td>
-                        <td>20000</td>
-                        <td class="centro">15/08/2023</td>
-                        <td>45000</td>
-                        <td class="centro">17/08/2025</td>
-                    </tr>
-                    <tr>
-                        <td class="esquerda">Pastilha de freio</td>
-                        <td>25000</td>
-                        <td>24</td>
-                        <td>20000</td>
-                        <td class="centro">15/08/2023</td>
-                        <td>45000</td>
-                        <td class="centro">17/08/2025</td>
-                    </tr>
-                </tbody>
+                </thead>
             </table>
-        </div>
-    </section>
+            </div>
+            <div class="scroll sombra borda">
+                <table  class="">
+                    <tbody>
+                        <tr>
+                            <td class="esquerda item">Óleo lubrificante</td>
+                            <td class="km">9.999.999</td>
+                            <td class="prazo">999</td>
+                            <td class="km">9.999.999</td>
+                            <td class="centro data">20/10/2024</td>
+                            <td class="km">9.999.999</td>
+                            <td class="centro data">20/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Pastilha de freio</td>
+                            <td>25000</td>
+                            <td>24</td>
+                            <td>20000</td>
+                            <td>15/08/2023</td>
+                            <td>45000</td>
+                            <td>17/08/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Correia do motor</td>
+                            <td>50000</td>
+                            <td>60</td>
+                            <td>0</td>
+                            <td>02/06/2021</td>
+                            <td>50000</td>
+                            <td>02/06/2026</td>
+                        <tr>
+                            <td class="esquerda">Óleo lubrificante</td>
+                            <td>10000</td>
+                            <td>12</td>
+                            <td>9000</td>
+                            <td>20/10/2024</td>
+                            <td>19000</td>
+                            <td>20/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Pastilha de freio</td>
+                            <td>25000</td>
+                            <td>24</td>
+                            <td>20000</td>
+                            <td>15/08/2023</td>
+                            <td>45000</td>
+                            <td>17/08/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Correia do motor</td>
+                            <td>50000</td>
+                            <td>60</td>
+                            <td>0</td>
+                            <td>02/06/2021</td>
+                            <td>50000</td>
+                            <td>02/06/2026</td>
+                        <tr>
+                            <td class="esquerda">Óleo lubrificante</td>
+                            <td>10000</td>
+                            <td>12</td>
+                            <td>9000</td>
+                            <td>20/10/2024</td>
+                            <td>19000</td>
+                            <td>20/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Pastilha de freio</td>
+                            <td>25000</td>
+                            <td>24</td>
+                            <td>20000</td>
+                            <td>15/08/2023</td>
+                            <td>45000</td>
+                            <td>17/08/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Correia do motor</td>
+                            <td>50000</td>
+                            <td>60</td>
+                            <td>0</td>
+                            <td>02/06/2021</td>
+                            <td>50000</td>
+                            <td>02/06/2026</td>
+                                            <tr>
+                            <td class="esquerda">Óleo lubrificante</td>
+                            <td>10000</td>
+                            <td>12</td>
+                            <td>9000</td>
+                            <td>20/10/2024</td>
+                            <td>19000</td>
+                            <td>20/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Pastilha de freio</td>
+                            <td>25000</td>
+                            <td>24</td>
+                            <td>20000</td>
+                            <td>15/08/2023</td>
+                            <td>45000</td>
+                            <td>17/08/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Correia do motor</td>
+                            <td>50000</td>
+                            <td>60</td>
+                            <td>0</td>
+                            <td>02/06/2021</td>
+                            <td>50000</td>
+                            <td>02/06/2026</td>
+                                            <tr>
+                            <td class="esquerda">Óleo lubrificante</td>
+                            <td>10000</td>
+                            <td>12</td>
+                            <td>9000</td>
+                            <td>20/10/2024</td>
+                            <td>19000</td>
+                            <td>20/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Pastilha de freio</td>
+                            <td>25000</td>
+                            <td>24</td>
+                            <td>20000</td>
+                            <td>15/08/2023</td>
+                            <td>45000</td>
+                            <td>17/08/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Correia do motor</td>
+                            <td>50000</td>
+                            <td>60</td>
+                            <td>0</td>
+                            <td>02/06/2021</td>
+                            <td>50000</td>
+                            <td>02/06/2026</td>
+                                            <tr>
+                            <td class="esquerda">Óleo lubrificante</td>
+                            <td>10000</td>
+                            <td>12</td>
+                            <td>9000</td>
+                            <td>20/10/2024</td>
+                            <td>19000</td>
+                            <td>20/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Pastilha de freio</td>
+                            <td>25000</td>
+                            <td>24</td>
+                            <td>20000</td>
+                            <td>15/08/2023</td>
+                            <td>45000</td>
+                            <td>17/08/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Correia do motor</td>
+                            <td>50000</td>
+                            <td>60</td>
+                            <td>0</td>
+                            <td>02/06/2021</td>
+                            <td>50000</td>
+                            <td>02/06/2026</td>
+                                            <tr>
+                            <td class="esquerda">Óleo lubrificante</td>
+                            <td>10000</td>
+                            <td>12</td>
+                            <td>9000</td>
+                            <td>20/10/2024</td>
+                            <td>19000</td>
+                            <td>20/10/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Pastilha de freio</td>
+                            <td>25000</td>
+                            <td>24</td>
+                            <td>20000</td>
+                            <td>15/08/2023</td>
+                            <td>45000</td>
+                            <td>17/08/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Pastilha de freio</td>
+                            <td>25000</td>
+                            <td>24</td>
+                            <td>20000</td>
+                            <td>15/08/2023</td>
+                            <td>45000</td>
+                            <td>17/08/2025</td>
+                        </tr>
+                        <tr>
+                            <td class="esquerda">Pastilha de freio</td>
+                            <td>25000</td>
+                            <td>24</td>
+                            <td>20000</td>
+                            <td>15/08/2023</td>
+                            <td>45000</td>
+                            <td>17/08/2025</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
 </body>
 </html>
