@@ -1,11 +1,11 @@
 :root{
     --fonte-escura: #000000;
     --fonte-clara: #595959;
-    --input-fundo: #edf2fb;
-    --tabela-cabecalho:#5fa8d3;
-    --tabela-fundo: #eeeeee;
-    --tabela-destaque: #bee9e8;
-    --janela-fundo: #62b6cb;
+    --input-fundo: #f9f6f2;
+    --tabela-cabecalho:#e2e2e2;
+    --tabela-fundo: #f9f6f2;
+    --tabela-destaque: #e1dbd6;
+    --janela-fundo: #d1d1d1;
     --borda: #3b2b46;
     --sombra: #888888;
 }
@@ -28,8 +28,9 @@ html, body{
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-columns: repeat(12, [col-start] 1fr);
-    grid-template-rows: repeat(12, [row-start] 1fr);
+    grid-template-areas:
+        'cab cab cab cab cab cab cab cab cab cab cab cab'
+        'ml ml corp corp corp corp corp corp corp corp corp corp';
     gap: 0;
 }
 
@@ -46,15 +47,16 @@ input{
 }
 
 header{
+    background-color: #000000;
     margin: 1rem;
-    grid-column: col-start / span 12;
-    grid-row: row-start;
+    grid-area: cab;
     display: flex;
-    flex-flow: row nowrap;
+    flex-direction: column;
     justify-content: space-between;
     gap: .5rem;
     color: var(--fonte-escura);
     background-color: var(--janela-fundo);
+
 
     input, label{
         margin: 0 1rem;
@@ -67,6 +69,20 @@ header{
     input{
         margin-bottom: 1rem;
     }
+}
+
+.cabecalho-titulo{
+    background-color: blanchedalmond;
+    border-bottom: 1px solid var(--borda);
+    padding: .5rem;
+    margin: 0;
+    text-align: center;
+    }
+
+.cabecalho-form{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }
 
 .form-veiculo{
@@ -92,13 +108,12 @@ header{
 
 .corpo{
     margin: 1rem;
-    grid-column: col-start 3 / span 10;
-    grid-row: row-start 2 / span 11;
+    grid-area: corp;
 }
 
 .scroll{
     min-width: 50rem;
-    height: 73vh;
+    height: 68vh;
     overflow-y:auto;
     scrollbar-gutter:stable;
     gap:0;
@@ -106,6 +121,7 @@ header{
 
 .sem-scroll{
     min-width: 50rem;
+    height: 10vh;
     overflow-y: hidden;
     scrollbar-gutter:stable;;
     margin-bottom: 0;
@@ -115,6 +131,7 @@ header{
 
 table{
     width: 100%;
+    border-collapse: collapse;
 
     thead{
         color: var(--fonte-escura);
@@ -159,15 +176,14 @@ table{
 
 .menu-lateral{
     margin: 1rem;
-    grid-column: col-start 1 / span 2;
-    grid-row: row-start 2 / span 11;
-
+    grid-area: ml;
     min-width: 14rem;
     color: var(--fonte-escura);
     background-color: var(--janela-fundo);
     display: flex;
     flex-direction: column;
     padding: .5rem;
+    height: 78vh;
     
     div{
         padding: .5rem;
@@ -202,42 +218,42 @@ table{
     width: 7rem;
 }
 
-.card, botao-flutuante{
+.card, .botao-flutuante{
     display: none;
 }
 
 .icone{
-      display: inline-flex;
-      width: 1.7rem;
-      height: 1.7rem;
-      padding: 0;
-      border: none;
-      background-color: transparent;
-      background-position: center; /* posição do ícone */
-      background-size: 100%;
-    }
+    display: inline-flex;
+    width: 1.7rem;
+    height: 1.7rem;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    background-position: center; /* posição do ícone */
+    background-size: 100%;
+    cursor: pointer;
+}
 
 .btn{
-      margin-top: .5rem;
-      display: flex;
-      width: 100%;
-      height: 4rem;
-      padding: 0;
-      background-color: var(--tabela-destaque);
-      background-position: center; /* posição do ícone */
-      background-size: 100%;
-      background-repeat: no-repeat;
-      align-items: center;
-      border-radius: 8px;
+    margin-top: .5rem;
+    display: flex;
+    width: 100%;
+    height: 4rem;
+    padding: 0;
+    background-color: var(--tabela-destaque);
+    background-position: center; /* posição do ícone */
+    background-size: 100%;
+    background-repeat: no-repeat;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
 
-      img{
-        width: 3rem;
-        height: 3rem;
+    img{
+    width: 3rem;
+    height: 3rem;
 
-      }
     }
-
-
+}
 
 .i-atualizar{
     background-image: url("./fonts/refresh_48dp_0000F5.svg");
@@ -245,10 +261,6 @@ table{
 
 .i-deletar{
     background-image: url("./fonts/delete_48dp_EA3323.svg");
-}
-
-.i-incluir{
-    background-image: url("./fonts/upgrade_48dp_EA3323.svg");
 }
 
 .i-adicionar{
@@ -269,21 +281,14 @@ table{
     .container{
         display: flex;
         flex-direction: column;
-        /*
-        grid-template-columns: auto;
-        grid-template-rows: auto auto;
-        */
     }
+
     header{
         margin: 0;
-        /*
-        grid-column: 1;
-        grid-row: 1;
-        */
         flex-direction: column;
         justify-content: flex-start;
         gap: 0;
-        height: 9.5rem;
+        height: 16.5rem;
 
         input, label{
             margin: 0 .5rem;
@@ -296,6 +301,10 @@ table{
         input{
             margin-bottom: .5rem;
         }
+    }
+
+    .cabecalho-form{
+        flex-direction: column;
     }
 
     .form-veiculo{
@@ -314,15 +323,12 @@ table{
         margin: 1rem 0 0 0;
         height: auto;
         overflow-y: auto;
-        /*
-        grid-column: 1;
-        grid-row: 2;
-        */
     }
 
     .sem-scroll, table{
         display: none;
     }
+
     .scroll{
         height: auto;
         min-width: 1rem;
@@ -360,27 +366,23 @@ table{
     .menu-lateral{
         position: fixed;
         top: 30vh;
-        left: 5%;
-        /*
-        grid-column: 1;
-        grid-row: 2;
-        */
+        left: 10%;
         z-index: 50;
         height: 43vh;
-        width: 90%;
-        margin: auto;
+        width: 80%;
+        margin: 0;
         border-radius: 6px;
     }
 
     .botao-flutuante{
+        display: flex;
+    }
+
+    .i-adicionar{
         width: 8rem;
         height: 8rem;
-        display: flex;
         position: fixed;
         bottom: 1rem;
         right: 1rem;
-
     }
-
  }
-

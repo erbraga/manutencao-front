@@ -9,20 +9,25 @@
 <body>
     <div class="container">
         <header class="sombra borda">
-            <form action="" method="post" class="form-veiculo">
-                <label for="veiculo">Veículo:</label>
-                <input type="text" id="veiculo" name ="veiculo">
-            </form>
-            <form action=""  class="form-info">
-                <div class="form-info-col">
-                    <label for="data">data:</label>
-                    <input type="date" id="data" name ="data">
+                <h1 class="cabecalho-titulo">
+                    Manutenção de veículos
+                </h1>
+                <div class="cabecalho-form">
+                    <form action="" method="post" class="form-veiculo">
+                        <label for="veiculo">Veículo:</label>
+                        <input type="text" id="veiculo" name ="veiculo">
+                    </form>
+                    <form action=""  class="form-info">
+                        <div class="form-info-col">
+                            <label for="data">data:</label>
+                            <input type="date" id="data" name ="data">
+                        </div>
+                        <div class="form-info-col">
+                            <label for="km">Quilometragem:</label>
+                            <input type="number" name="km" id="km">
+                        </div>
+                    </form>
                 </div>
-                <div class="form-info-col">
-                    <label for="km">Quilometragem:</label>
-                    <input type="number" name="km" id="km">
-                </div>
-            </form>
         </header>
 
         <section class="menu-lateral sombra borda">
@@ -32,7 +37,7 @@
                     <input type="text" id="item">
                 </div>
                 <div>
-                    <label for="especificacao-km">Quilometragem para troca</label>
+                    <label for="especificacao-km">Km para troca</label>
                     <input type="number" name="especificacao-km" id="especificacao-km">
                 </div>
                 <div>
@@ -40,15 +45,15 @@
                     <input type="number" name="especificacao-prazo" id="especificacao-prazo">
                 </div>
                 <div>
-                    <label for="ultima-troca-km">Última troca em</label>
+                    <label for="ultima-troca-km"> Km da Última troca</label>
                     <input type="number" name="ultima-troca-km" id="ultima-troca-km">
                 </div>
                 <div>
-                    <label for="ultima-troca-data">Próxima troca em</label>
+                    <label for="ultima-troca-data">Data da última troca</label>
                     <input type="number" name="ultima-troca-data" id="ultima-troca-data">
                 </div>
                 <div>
-                    <button class="btn"><img src="./static/fonts/upgrade_48dp_EA3323.svg" alt="Novo item">Novo item</button>
+                    <button class="btn"><img src="./static/fonts/upgrade_48dp_26A269.svg" alt="Novo item">Novo item</button>
                 </div>
             </form>
         </section>
@@ -532,8 +537,8 @@
                 </div>
             </div>
 
-            <div>
-                <button class="icone i-adicionar botao-flutuante"></button>
+            <div class="botao-flutuante">
+                <button class="icone i-adicionar"></button>
             </div>
 
         </section>
