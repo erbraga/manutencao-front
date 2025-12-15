@@ -1,6 +1,6 @@
 :root{
     --fonte-escura: #000000;
-    --fonte-clara: #595959;
+    --cabecalho-titulo: #FFEBCD;
     --input-fundo: #f9f6f2;
     --tabela-cabecalho:#e2e2e2;
     --tabela-fundo: #f9f6f2;
@@ -72,7 +72,7 @@ header{
 }
 
 .cabecalho-titulo{
-    background-color: blanchedalmond;
+    background-color: var(--cabecalho-titulo);
     border-bottom: 1px solid var(--borda);
     padding: .5rem;
     margin: 0;
@@ -174,7 +174,7 @@ table{
     text-align: center;
 }
 
-.menu-lateral{
+.formulario{
     margin: 1rem;
     grid-area: ml;
     min-width: 14rem;
@@ -189,7 +189,7 @@ table{
         padding: .5rem;
         display: flex;
         flex-direction: column;
-        width: 100%;
+        
     }
 }
 
@@ -271,24 +271,23 @@ table{
  *###                    Layout mobile                           ###*
  *##################################################################*/
 
-  @media (max-width: 480px) {
+  @media ((max-width: 480px) and (orientation: portrait)){
 
     *{
         font-size: 12px;
     }
   
-
     .container{
         display: flex;
         flex-direction: column;
     }
 
     header{
-        margin: 0;
+        margin: 1rem;
         flex-direction: column;
         justify-content: flex-start;
         gap: 0;
-        height: 16.5rem;
+        height: fit-content;
 
         input, label{
             margin: 0 .5rem;
@@ -303,6 +302,10 @@ table{
         }
     }
 
+    .cabecalho-titulo{
+        width: 100%;
+    }
+
     .cabecalho-form{
         flex-direction: column;
     }
@@ -314,7 +317,7 @@ table{
     .form-info{
         width: 100%;
         justify-content: flex-start;
-        min-width: none;
+  
     }
 
     .corpo{
@@ -363,12 +366,12 @@ table{
         text-align: left;
     }
 
-    .menu-lateral{
+    .formulario{
         position: fixed;
         top: 30vh;
         left: 10%;
         z-index: 50;
-        height: 43vh;
+        height: fit-content;
         width: 80%;
         margin: 0;
         border-radius: 6px;
@@ -384,5 +387,78 @@ table{
         position: fixed;
         bottom: 1rem;
         right: 1rem;
+        background-color: #ffffff;
+        padding: 0;
+        margin: 0;
+        border-radius: 6px;
+    }
+ }
+
+ /*##################################################################*
+ *###                    Layout tablet                            ###*
+ *##################################################################*/
+
+
+  @media ((max-height: 820px) and (min-height:490px) and (orientation: landscape)) 
+        or ((max-width: 820px) and (min-width:490px) and (orientation: portrait))
+        or ((max-height: 480px) and (orientation: landscape)) {
+
+    *{
+        font-size: 12px;
+    }
+  
+    .container{
+        display: grid;
+        grid-template-areas:
+            'cab'
+            'corp'
+            'ml';
+    }
+
+    header{
+        height: fit-content;
+    }
+
+    .corpo{
+        display: flex;
+        flex-direction: column;
+        margin: 1rem;
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .sem-scroll{
+        height: fit-content;
+        min-height: 4rem;
+    }
+
+    .formulario{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: fit-content;
+
+        form{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+    }
+
+    .formulario-item{
+        width: 100%;
+    }
+
+    .formulario-campos{
+        width: 20%;
+    }
+
+    .btn{
+        height: 3rem;
+    }
+
+    .card, .botao-flutuante{
+        display: none;
     }
  }

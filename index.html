@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./static/styles.css">
+    <script src="./static/script.js"></script>
     <title>Manutenção de veículos</title>
 </head>
 <body>
@@ -15,45 +16,47 @@
                 <div class="cabecalho-form">
                     <form action="" method="post" class="form-veiculo">
                         <label for="veiculo">Veículo:</label>
-                        <input type="text" id="veiculo" name ="veiculo">
+                        <input type="text" id="veiculo" name ="veiculo" value = "Fiat Pulse Audace 1.0 turbo AT - ano 2023">
                     </form>
                     <form action=""  class="form-info">
                         <div class="form-info-col">
                             <label for="data">data:</label>
-                            <input type="date" id="data" name ="data">
+                            <input type="date" id="data" name ="data" value="2025-12-12">
                         </div>
                         <div class="form-info-col">
                             <label for="km">Quilometragem:</label>
-                            <input type="number" name="km" id="km">
+                            <input type="number" name="km" id="km" value="25468">
                         </div>
                     </form>
                 </div>
         </header>
 
-        <section class="menu-lateral sombra borda">
+        <section class="formulario sombra borda">
             <form action="">
-                <div>
+                <div class="formulario-item">
                     <label for="item">Item:</label>
-                    <input type="text" id="item">
+                    <input type="text" id="item" value="Teste de peça para trocar logo, antes que estrague">
                 </div>
-                <div>
+                <div class="formulario-campos">
                     <label for="especificacao-km">Km para troca</label>
-                    <input type="number" name="especificacao-km" id="especificacao-km">
+                    <input type="number" name="especificacao-km" id="especificacao-km" value="10000">
                 </div>
-                <div>
-                    <label for="especificacao-prazo">Prazo para troca</label>
-                    <input type="number" name="especificacao-prazo" id="especificacao-prazo">
+                <div class="formulario-campos">
+                    <label for="especificacao-prazo">Prazo para troca (em meses)</label>
+                    <input type="number" name="especificacao-prazo" id="especificacao-prazo" value = "12">
                 </div>
-                <div>
-                    <label for="ultima-troca-km"> Km da Última troca</label>
-                    <input type="number" name="ultima-troca-km" id="ultima-troca-km">
+                <div class="formulario-campos">
+                    <label for="ultima-troca-km"> Km da última troca</label>
+                    <input type="number" name="ultima-troca-km" id="ultima-troca-km" value="8397">
                 </div>
-                <div>
+                <div class="formulario-campos">
                     <label for="ultima-troca-data">Data da última troca</label>
-                    <input type="number" name="ultima-troca-data" id="ultima-troca-data">
+                    <input type="date" name="ultima-troca-data" id="ultima-troca-data" value="2021-11-12">
                 </div>
-                <div>
-                    <button class="btn"><img src="./static/fonts/upgrade_48dp_26A269.svg" alt="Novo item">Novo item</button>
+                <div class="formulario-campos">
+                    <button class="btn" type="submit" onclick="teste">
+                        <img src="./static/fonts/upgrade_48dp_26A269.svg" alt="Novo item">
+                        Novo item</button>
                 </div>
             </form>
         </section>
@@ -95,273 +98,6 @@
                                 <button class = "icone i-deletar"></button>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="esquerda">Pastilha de freio</td>
-                            <td>25000</td>
-                            <td>24</td>
-                            <td>20000</td>
-                            <td>15/08/2023</td>
-                            <td>45000</td>
-                            <td>17/08/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Correia do motor</td>
-                            <td>50000</td>
-                            <td>60</td>
-                            <td>0</td>
-                            <td>02/06/2021</td>
-                            <td>50000</td>
-                            <td>02/06/2026</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        <tr>
-                            <td class="esquerda">Óleo lubrificante</td>
-                            <td>10000</td>
-                            <td>12</td>
-                            <td>9000</td>
-                            <td>20/10/2024</td>
-                            <td>19000</td>
-                            <td>20/10/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Pastilha de freio</td>
-                            <td>25000</td>
-                            <td>24</td>
-                            <td>20000</td>
-                            <td>15/08/2023</td>
-                            <td>45000</td>
-                            <td>17/08/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Correia do motor</td>
-                            <td>50000</td>
-                            <td>60</td>
-                            <td>0</td>
-                            <td>02/06/2021</td>
-                            <td>50000</td>
-                            <td>02/06/2026</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        <tr>
-                            <td class="esquerda">Óleo lubrificante</td>
-                            <td>10000</td>
-                            <td>12</td>
-                            <td>9000</td>
-                            <td>20/10/2024</td>
-                            <td>19000</td>
-                            <td>20/10/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Pastilha de freio</td>
-                            <td>25000</td>
-                            <td>24</td>
-                            <td>20000</td>
-                            <td>15/08/2023</td>
-                            <td>45000</td>
-                            <td>17/08/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Correia do motor</td>
-                            <td>50000</td>
-                            <td>60</td>
-                            <td>0</td>
-                            <td>02/06/2021</td>
-                            <td>50000</td>
-                            <td>02/06/2026</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        <tr>
-                            <td class="esquerda">Óleo lubrificante</td>
-                            <td>10000</td>
-                            <td>12</td>
-                            <td>9000</td>
-                            <td>20/10/2024</td>
-                            <td>19000</td>
-                            <td>20/10/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Pastilha de freio</td>
-                            <td>25000</td>
-                            <td>24</td>
-                            <td>20000</td>
-                            <td>15/08/2023</td>
-                            <td>45000</td>
-                            <td>17/08/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Correia do motor</td>
-                            <td>50000</td>
-                            <td>60</td>
-                            <td>0</td>
-                            <td>02/06/2021</td>
-                            <td>50000</td>
-                            <td>02/06/2026</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        <tr>
-                            <td class="esquerda">Óleo lubrificante</td>
-                            <td>10000</td>
-                            <td>12</td>
-                            <td>9000</td>
-                            <td>20/10/2024</td>
-                            <td>19000</td>
-                            <td>20/10/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Pastilha de freio</td>
-                            <td>25000</td>
-                            <td>24</td>
-                            <td>20000</td>
-                            <td>15/08/2023</td>
-                            <td>45000</td>
-                            <td>17/08/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Correia do motor</td>
-                            <td>50000</td>
-                            <td>60</td>
-                            <td>0</td>
-                            <td>02/06/2021</td>
-                            <td>50000</td>
-                            <td>02/06/2026</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        <tr>
-                            <td class="esquerda">Óleo lubrificante</td>
-                            <td>10000</td>
-                            <td>12</td>
-                            <td>9000</td>
-                            <td>20/10/2024</td>
-                            <td>19000</td>
-                            <td>20/10/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Pastilha de freio</td>
-                            <td>25000</td>
-                            <td>24</td>
-                            <td>20000</td>
-                            <td>15/08/2023</td>
-                            <td>45000</td>
-                            <td>17/08/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Correia do motor</td>
-                            <td>50000</td>
-                            <td>60</td>
-                            <td>0</td>
-                            <td>02/06/2021</td>
-                            <td>50000</td>
-                            <td>02/06/2026</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        <tr>
-                            <td class="esquerda">Óleo lubrificante</td>
-                            <td>10000</td>
-                            <td>12</td>
-                            <td>9000</td>
-                            <td>20/10/2024</td>
-                            <td>19000</td>
-                            <td>20/10/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Pastilha de freio</td>
-                            <td>25000</td>
-                            <td>24</td>
-                            <td>20000</td>
-                            <td>15/08/2023</td>
-                            <td>45000</td>
-                            <td>17/08/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Pastilha de freio</td>
-                            <td>25000</td>
-                            <td>24</td>
-                            <td>20000</td>
-                            <td>15/08/2023</td>
-                            <td>45000</td>
-                            <td>17/08/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="esquerda">Pastilha de freio</td>
-                            <td>25000</td>
-                            <td>24</td>
-                            <td>20000</td>
-                            <td>15/08/2023</td>
-                            <td>45000</td>
-                            <td>17/08/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
 
@@ -384,156 +120,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card borda sombra">
-                    <div class="card-titulo">
-                        <span>Óleo lubrificante </span>
-                        <div>
-                            <button class = "icone i-atualizar"></button>
-                            <button class = "icone i-deletar"></button>
-                        </div>
-                    </div>
-                    <div class = "card-corpo">
-                        <div class="card-col">
-                            <div>Última troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                        <div class="card-col">
-                            <div>Próxima troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card borda sombra">
-                    <div class="card-titulo">
-                        <span>Óleo lubrificante </span>
-                        <div>
-                            <button class = "icone i-atualizar"></button>
-                            <button class = "icone i-deletar"></button>
-                        </div>
-                    </div>
-                    <div class = "card-corpo">
-                        <div class="card-col">
-                            <div>Última troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                        <div class="card-col">
-                            <div>Próxima troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card borda sombra">
-                    <div class="card-titulo">
-                        <span>Óleo lubrificante </span>
-                        <div>
-                            <button class = "icone i-atualizar"></button>
-                            <button class = "icone i-deletar"></button>
-                        </div>
-                    </div>
-                    <div class = "card-corpo">
-                        <div class="card-col">
-                            <div>Última troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                        <div class="card-col">
-                            <div>Próxima troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card borda sombra">
-                    <div class="card-titulo">
-                        <span>Óleo lubrificante </span>
-                        <div>
-                            <button class = "icone i-atualizar"></button>
-                            <button class = "icone i-deletar"></button>
-                        </div>
-                    </div>
-                    <div class = "card-corpo">
-                        <div class="card-col">
-                            <div>Última troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                        <div class="card-col">
-                            <div>Próxima troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card borda sombra">
-                    <div class="card-titulo">
-                        <span>Óleo lubrificante </span>
-                        <div>
-                            <button class = "icone i-atualizar"></button>
-                            <button class = "icone i-deletar"></button>
-                        </div>
-                    </div>
-                    <div class = "card-corpo">
-                        <div class="card-col">
-                            <div>Última troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                        <div class="card-col">
-                            <div>Próxima troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card borda sombra">
-                    <div class="card-titulo">
-                        <span>Óleo lubrificante </span>
-                        <div>
-                            <button class = "icone i-atualizar"></button>
-                            <button class = "icone i-deletar"></button>
-                        </div>
-                    </div>
-                    <div class = "card-corpo">
-                        <div class="card-col">
-                            <div>Última troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                        <div class="card-col">
-                            <div>Próxima troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card borda sombra">
-                    <div class="card-titulo">
-                        <span>Óleo lubrificante </span>
-                        <div>
-                            <button class = "icone i-atualizar"></button>
-                            <button class = "icone i-deletar"></button>
-                        </div>
-                    </div>
-                    <div class = "card-corpo">
-                        <div class="card-col">
-                            <div>Última troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                        <div class="card-col">
-                            <div>Próxima troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card borda sombra">
-                    <div class="card-titulo">
-                        <span>ÚLTIMO Óleo lubrificante </span>
-                        <div>
-                            <button class = "icone i-atualizar"></button>
-                            <button class = "icone i-deletar"></button>
-                        </div>
-                    </div>                    <div class = "card-corpo">
-                        <div class="card-col">
-                            <div>Última troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                        <div class="card-col">
-                            <div>Próxima troca:</div>
-                            <div>9.999.999km - 20/10/2024</div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
