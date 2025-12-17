@@ -21,10 +21,15 @@ class Formulario{
         //let linha = document.getElementById('tabela').insertRow();
         this.formulario = document.getElementById('formulario');
         this.botao = document.getElementById('btnFormulario');
+        this.botaoFlutuante = document.getElementById('botao-flutuante');
+
         this.botao.addEventListener("click", (event) => {
             tabela.incluirLinha(tabela.tabela.insertRow(), this.ler());
         });
 
+        this.botaoFlutuante.addEventListener("click", (event) => {
+            this.exibir(event, this.formulario);
+        });
     }
 
     ler(){
@@ -35,16 +40,20 @@ class Formulario{
             ultimaTrocaKm: document.getElementById("ultima-troca-km").value,
             ultimaTrocaData: document.getElementById("ultima-troca-data").value,
         };
-
-        if (conteudo.item == ''){
-            alert('Deixa de ser burro');
-        }
-        
-
-        return conteudo
     }
 
+    exibir(event, formulario){
+        let classes = formulario.classList;
+        console.log(classes);
 
+        if (classes.contains("invisivel")){
+            classes.replace("invisivel", "visivel");
+        }
+
+        else if (classes.contains("visivel")){
+            classes.replace("visivel", "invisivel");
+        }
+    }
 }
 
 
@@ -104,12 +113,12 @@ class Tabela{
     incluirLinha(linha, valores){
         //let linha = document.getElementById('tabela').insertRow();
         this.incluirCelula(linha, 'item', valores.item);
-        this.incluirCelula(linha, 'km', valores.especificacaoKm);
+        this.incluirCelula(linha, 'especificacao-km', valores.especificacaoKm);
         this.incluirCelula(linha, 'prazo', valores.especificacaoPrazo);
-        this.incluirCelula(linha, 'km', valores.ultimaTrocaKm);
-        this.incluirCelula(linha, 'data', this.formatarDataBr(valores.ultimaTrocaData));
-        this.incluirCelula(linha, 'km', this.somarKm(valores.especificacaoKm, valores.ultimaTrocaKm));
-        this.incluirCelula(linha, 'data', this.somarPrazo(valores.especificacaoPrazo, valores.ultimaTrocaData));
+        this.incluirCelula(linha, 'ultima-km', valores.ultimaTrocaKm);
+        this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(valores.ultimaTrocaData));
+        this.incluirCelula(linha, 'proxima-km', this.somarKm(valores.especificacaoKm, valores.ultimaTrocaKm));
+        this.incluirCelula(linha, 'proxima-data', this.somarPrazo(valores.especificacaoPrazo, valores.ultimaTrocaData));
         this.incluirCelula(linha, 'acoes', '<button class = "icone i-atualizar"></button><button class = "icone i-deletar"></button>');
     }
     

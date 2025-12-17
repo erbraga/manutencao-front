@@ -199,27 +199,12 @@ table{
     min-width: 8rem;
 }
 
-.especificacao-km{
+.km{
     min-width: 5.5rem;
     width: 8rem;
 }
 
-.ultima-km{
-    min-width: 5.5rem;
-    width: 8rem;
-}
-
-.proxima-km{
-    min-width: 5.5rem;
-    width: 8rem;
-}
-
-.ultima-data{
-    min-width: 6.5rem;
-    width: 8rem;
-}
-
-.proxima-data{
+.data{
     min-width: 6.5rem;
     width: 8rem;
 }
@@ -283,18 +268,6 @@ table{
     background-image: url("./fonts/add_box_48dp_0000F5.svg");    
 }
 
-.invisivel{
-    display: none;
-}
-
-.visivel-flex{
-    display: flex;
-}
-
-.visivel-grid{
-    display:grid;
-}
-
 /*##################################################################*
  *###                    Layout mobile                           ###*
  *##################################################################*/
@@ -356,127 +329,15 @@ table{
         overflow-y: auto;
     }
 
-    .sem-scroll{
+    .sem-scroll, table{
         display: none;
     }
-
-    table{
-
-        tr{
-            margin: 1rem;
-            display: grid;
-            grid-template-columns: auto auto auto auto;
-            grid-template-rows: auto auto auto;
-            box-shadow: 5px 5px 10px var(--sombra);
-            border: 1px solid var(--borda);
-            border-radius: 6px;
-        }
-
-        td{
-            word-wrap: break-word;
-        }
-    }
-
-    .item{
-        display: grid;
-        grid-column: 1 / 3;
-        grid-row: 1;
-        font-weight: bold;
-        
-
-    }
-
-    .especificacao-km{
-        display: grid;
-        grid-column: 1;
-        grid-row: 2;
-        display: inline-flex;
-    }
-
-    .especificacao-km::after, .ultima-km::after,
-     .proxima-km::after{
-        
-        content: " km"
-    }
-
-    /*
-    .especificacao-km::before{
-        content: "Trocar a cada:\a";
-        font-weight: bold;
-    }
-
-    .ultima-km::before{
-        content: "Última troca:";
-        font-weight: bold;
-    }
-
-    .proxima-km::before{
-        content: "Próxima troca:";
-        font-weight: bold;
-    }
-    */
-
-    .prazo{
-        display: grid;
-        grid-column: 1;
-        grid-row: 3;
-        display: inline-flex;
-    }
-
-    .prazo::after{
-        content: " meses";
-    }
-
-    .ultima-km{
-        display: grid;
-        grid-column: 2;
-        grid-row: 2;
-        display: inline-flex;
-
-    }
-
-    .ultima-data{
-        display: grid;
-        grid-column: 2;
-        grid-row: 3;
-        display: inline-flex;
-    }
-
-    .ultima-data::before, .proxima-data::before{
-        content: "em ";
-    }
-
-    .proxima-km{
-        display: grid;
-        grid-column: 3;
-        grid-row: 2;
-        display: inline-flex;
-    }
-
-    .proxima-data{
-        display: grid;
-        grid-column: 3;
-        grid-row: 3;
-        display: inline-flex;
-    }
-
-    .acoes{
-        display: grid;
-        grid-column: 4;
-        grid-row: 1 / span 3;
-        text-align: center;
-        width: 1rem;
-        background-color: aqua;
-    }
-
 
     .scroll{
         height: auto;
         min-width: 1rem;
         border: none;
     }
-
-    
 
     .card{
         display: flex;
@@ -505,8 +366,6 @@ table{
         padding: .5rem;
         text-align: left;
     }
-
-    
 
     .formulario{
         position: fixed;
