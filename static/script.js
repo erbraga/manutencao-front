@@ -22,7 +22,7 @@ class Formulario{
         this.formulario = document.getElementById('formulario');
         this.botao = document.getElementById('btnFormulario');
         this.botaoFlutuante = document.getElementById('botao-flutuante');
-
+        
         this.botao.addEventListener("click", (event) => {
             tabela.incluirLinha(tabela.tabela.insertRow(), this.ler());
         });
@@ -40,11 +40,11 @@ class Formulario{
             ultimaTrocaKm: document.getElementById("ultima-troca-km").value,
             ultimaTrocaData: document.getElementById("ultima-troca-data").value,
         };
+        return conteudo;
     }
 
     exibir(event, formulario){
         let classes = formulario.classList;
-        console.log(classes);
 
         if (classes.contains("invisivel")){
             classes.replace("invisivel", "visivel");

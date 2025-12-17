@@ -283,23 +283,31 @@ table{
     background-image: url("./fonts/add_box_48dp_0000F5.svg");    
 }
 
+/*
 .invisivel{
     display: none;
 }
 
-.visivel-flex{
-    display: flex;
+.visivel{
+    display: grid;
 }
+*/
 
-.visivel-grid{
-    display:grid;
-}
 
 /*##################################################################*
  *###                    Layout mobile                           ###*
  *##################################################################*/
 
   @media ((max-width: 480px) and (orientation: portrait)){
+
+    .invisivel{
+        display: none;
+        bottom: 3rem;
+    }
+
+    .visivel{
+        display: grid;
+    }
 
     *{
         font-size: 12px;
@@ -396,7 +404,7 @@ table{
     .especificacao-km::after, .ultima-km::after,
      .proxima-km::after{
         
-        content: " km"
+        content: "\00a0km"
     }
 
     /*
@@ -424,7 +432,7 @@ table{
     }
 
     .prazo::after{
-        content: " meses";
+        content: "\00a0meses";
     }
 
     .ultima-km{
@@ -443,7 +451,7 @@ table{
     }
 
     .ultima-data::before, .proxima-data::before{
-        content: "em ";
+        content: "em\00a0";
     }
 
     .proxima-km{
@@ -466,17 +474,16 @@ table{
         grid-row: 1 / span 3;
         text-align: center;
         width: 1rem;
-        background-color: aqua;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 0 1rem 0;
     }
-
 
     .scroll{
         height: auto;
         min-width: 1rem;
         border: none;
     }
-
-    
 
     .card{
         display: flex;
