@@ -116,6 +116,7 @@ header{
     height: 68vh;
     overflow-y:auto;
     scrollbar-gutter:stable;
+    background-color: var(--tabela-fundo);
     gap:0;
 }
 

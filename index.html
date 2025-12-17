@@ -32,29 +32,29 @@
         </header>
 
         <section class="formulario sombra borda">
-            <form action="">
+            <form id = "formulario" action="">
                 <div class="formulario-item">
                     <label for="item">Item:</label>
-                    <input type="text" id="item" value="Teste de peça para trocar logo, antes que estrague">
+                    <input type="text" id="item" required value="Teste de peça para trocar logo, antes que estrague">
                 </div>
                 <div class="formulario-campos">
                     <label for="especificacao-km">Km para troca</label>
-                    <input type="number" name="especificacao-km" id="especificacao-km" value="10000">
+                    <input type="number" name="especificacao-km" id="especificacao-km" min="0" max="999999" required value="10000">
                 </div>
                 <div class="formulario-campos">
                     <label for="especificacao-prazo">Prazo para troca (em meses)</label>
-                    <input type="number" name="especificacao-prazo" id="especificacao-prazo" value = "12">
+                    <input type="number" name="especificacao-prazo" id="especificacao-prazo" min="0" max="400" required value = "12">
                 </div>
                 <div class="formulario-campos">
                     <label for="ultima-troca-km"> Km da última troca</label>
-                    <input type="number" name="ultima-troca-km" id="ultima-troca-km" value="8397">
+                    <input type="number" name="ultima-troca-km" id="ultima-troca-km" min="0" max="999999" required value="8397">
                 </div>
                 <div class="formulario-campos">
                     <label for="ultima-troca-data">Data da última troca</label>
-                    <input type="date" name="ultima-troca-data" id="ultima-troca-data" value="2021-11-12">
+                    <input type="date" name="ultima-troca-data" id="ultima-troca-data" min="1900-01-01" max="2100-12-31" required value="2021-11-12">
                 </div>
                 <div class="formulario-campos">
-                    <button class="btn" type="button" id="btnFormulario" onclick="lerFormulario()">
+                    <button class="btn" type="button" id="btnFormulario">
                         <img src="./static/fonts/upgrade_48dp_26A269.svg" alt="Novo item">
                         Novo item</button>
                 </div>
