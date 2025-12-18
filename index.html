@@ -16,16 +16,16 @@
                 <div class="cabecalho-form">
                     <form action="" method="post" class="form-veiculo">
                         <label for="veiculo">Veículo:</label>
-                        <input type="text" id="veiculo" name ="veiculo" value = "Fiat Pulse Audace 1.0 turbo AT - ano 2023">
+                        <input type="text" id="veiculo" name ="veiculo">
                     </form>
                     <form action=""  class="form-info">
                         <div class="form-info-col">
                             <label for="data">data:</label>
-                            <input type="date" id="data" name ="data" value="2025-12-12">
+                            <input type="date" id="data" name ="data">
                         </div>
                         <div class="form-info-col">
                             <label for="km">Quilometragem:</label>
-                            <input type="number" name="km" id="km" value="25468">
+                            <input type="number" name="km" id="km">
                         </div>
                     </form>
                 </div>
@@ -35,23 +35,23 @@
             <form  class="" action="">
                 <div class="formulario-item">
                     <label for="item">Item:</label>
-                    <input type="text" id="item" required value="Teste de peça para trocar logo, antes que estrague">
+                    <input type="text" id="item">
                 </div>
                 <div class="formulario-campos">
                     <label for="especificacao-km">Km para troca</label>
-                    <input type="number" name="especificacao-km" id="especificacao-km" min="0" max="999999" required value="10000">
+                    <input type="number" name="especificacao-km" id="especificacao-km">
                 </div>
                 <div class="formulario-campos">
                     <label for="especificacao-prazo">Prazo para troca (em meses)</label>
-                    <input type="number" name="especificacao-prazo" id="especificacao-prazo" min="0" max="400" required value = "12">
+                    <input type="number" name="especificacao-prazo" id="especificacao-prazo">
                 </div>
                 <div class="formulario-campos">
                     <label for="ultima-troca-km"> Km da última troca</label>
-                    <input type="number" name="ultima-troca-km" id="ultima-troca-km" min="0" max="999999" required value="8397">
+                    <input type="number" name="ultima-troca-km" id="ultima-troca-km">
                 </div>
                 <div class="formulario-campos">
                     <label for="ultima-troca-data">Data da última troca</label>
-                    <input type="date" name="ultima-troca-data" id="ultima-troca-data" min="1900-01-01" max="2100-12-31" required value="2021-11-12">
+                    <input type="date" name="ultima-troca-data" id="ultima-troca-data">
                 </div>
                 <div class="formulario-campos">
                     <button class="btn" type="button" id="btnFormulario">
@@ -85,19 +85,6 @@
             <div class="scroll sombra borda">
                 <table id="tabela" class="tabela">
                     <tbody>
-                        <tr card>
-                            <td class="item">Óleo lubrificante</td>
-                            <td class="especificacao-km">9.999.999</td>
-                            <td class="prazo">999</td>
-                            <td class="ultima-km">9.999.999</td>
-                            <td class="ultima-data">20/10/2024</td>
-                            <td class="proxima-km">9.999.999</td>
-                            <td class="proxima-data">20/10/2025</td>
-                            <td class="acoes">
-                                <button class = "icone i-atualizar"></button>
-                                <button class = "icone i-deletar"></button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

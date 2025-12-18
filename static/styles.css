@@ -284,15 +284,10 @@ table{
 }
 
 /*
-.invisivel{
+.id{
     display: none;
 }
-
-.visivel{
-    display: grid;
-}
-*/
-
+*
 
 /*##################################################################*
  *###                    Layout mobile                           ###*

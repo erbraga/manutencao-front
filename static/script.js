@@ -63,6 +63,8 @@ class Tabela{
         this.tabela = document.getElementById('tabela');
         this.tbody = this.tabela.querySelector("tbody");
 
+        this.init();
+
         // Delegação de eventos: escuta cliques no tbody
         this.tbody.addEventListener("click", (event) => {
             if (event.target.classList.contains("i-deletar")) {
@@ -73,6 +75,58 @@ class Tabela{
                 this.atualizarLinha(event.target, cabecalho.ler());
             }
         });
+    }
+
+    async init(){
+        const dados = await this.lerLista();
+        if (dados){
+            this.atualizarTabela(dados);
+        }
+    }
+    
+
+    async lerLista() {
+        try { 
+            const resposta = await fetch("http://127.0.0.1:5000/recuperar"); 
+            if (!resposta.ok) { 
+                throw new Error("Erro na requisição: " + resposta.status); 
+            } 
+            const dados = await resposta.json(); 
+            console.log("Lista recuperada:", dados); 
+            // você pode guardar os dados como propriedade da classe 
+            return dados;
+        } 
+        catch (erro) { 
+            console.error("Falha ao recuperar lista:", erro);
+        } 
+    }
+   
+
+    atualizarTabela(dados){
+
+        for (let i in dados.itens){
+
+            let valores = dados.itens[i];
+            let id = valores.id;
+            let descricao = valores.descricao;
+            let intervalo_km = valores.intervalo_km;
+            let intervalo_prazo = valores.intervalo_prazo;
+            let ultima_troca_km = valores.ultima_troca_km;
+            let ultima_troca_data = valores.ultima_troca_data;
+
+            let linha = document.getElementById('tabela').insertRow();
+            this.incluirCelula(linha, 'id', id);
+            this.incluirCelula(linha, 'item', descricao);
+            this.incluirCelula(linha, 'especificacao-km', intervalo_km);
+            this.incluirCelula(linha, 'prazo', intervalo_prazo);
+            this.incluirCelula(linha, 'ultima-km', ultima_troca_km);
+            this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(ultima_troca_data));
+            this.incluirCelula(linha, 'proxima-km', this.somarKm(ultima_troca_km, intervalo_km));
+            this.incluirCelula(linha, 'proxima-data', this.somarPrazo(intervalo_prazo, ultima_troca_data));
+            this.incluirCelula(linha, 'acoes', `<button class = "icone i-atualizar">
+                </button><button class = "icone i-deletar"></button>`);
+        }
+
     }
 
     formatarDataBr(data){
@@ -125,6 +179,8 @@ class Tabela{
     // Função para deletar uma linha
     deletarLinha(botao) {
         const linha = botao.closest("tr");
+        const id = linha.cells[0].textContent;
+        console.log(id)
         if (linha) {
             linha.remove();
         }
