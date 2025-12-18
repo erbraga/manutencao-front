@@ -38,7 +38,7 @@ label{
     padding: 0 .5rem;
 }
 
-input{
+input, select{
     color: var(--fonte-escura);
     background-color: var(--input-fundo);
     border: 1px solid var(--borda);
@@ -58,7 +58,7 @@ header{
     background-color: var(--janela-fundo);
 
 
-    input, label{
+    input, label, select{
         margin: 0 1rem;
     }
 
@@ -66,7 +66,7 @@ header{
         margin-top: 1rem;
     }
 
-    input{
+    input, select{
         margin-bottom: 1rem;
     }
 }
@@ -320,7 +320,7 @@ table{
         gap: 0;
         height: fit-content;
 
-        input, label{
+        input, label, select{
             margin: 0 .5rem;
         }
 
@@ -328,7 +328,7 @@ table{
             margin-top: .5rem;
         }
 
-        input{
+        input, select{
             margin-bottom: .5rem;
         }
     }

@@ -1,17 +1,112 @@
+class API{
+    constructor(){
+        this.init();
+    }
+
+    async init(){
+        const dados = await this.lerLista();
+        if (dados){
+            tabela.atualizarTabela(dados);
+            cabecalho.atualizarVeiculos(dados)
+        }
+    }
+    
+    async lerLista() {
+        try { 
+            const resposta = await fetch("http://127.0.0.1:5000/recuperar"); 
+            
+            if (!resposta.ok) { 
+                throw new Error("Erro na requisição: " + resposta.status); 
+            } 
+
+            const dados = await resposta.json(); 
+            return dados;
+        } 
+        catch (erro) { 
+            console.error("Falha ao recuperar lista:", erro);
+        } 
+    }
+
+    async deletarItem(id) {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/deletar/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Registro deletado com sucesso:", data);
+            } else {
+                console.error("Erro ao deletar registro:", response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+        }
+    }
+
+    async salvarItem(item) {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/salvar-item", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(item)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro ao salvar: ${response.status} - ${response.statusText}`);
+            }
+
+            const resposta = await response.json();
+            console.log("Item salvo com sucesso:", resposta);
+            return resposta;
+
+        } catch (erro) {
+            console.error("Erro na requisição:", erro);
+    }
+}
+
+
+
+
+
+    
+}
 
 class Cabecalho{
     
     constructor(){
+        this.atualizarData();
 
     }
 
     ler(){
         const conteudo = {
-            veiculo: document.getElementById("veiculo").value,
+            veiculoID: document.getElementById("veiculos-selecionar").selectedOptions[0].value,
+            veiculoDescricao: document.getElementById("veiculos-selecionar").selectedOptions[0].label,
             data: document.getElementById("data").value,
             km: document.getElementById("km").value
         };
         return conteudo;
+    }
+
+    atualizarData(){
+        let dataAtual = new Date().toISOString().slice(0,10);
+        document.getElementById("data").value = dataAtual;
+    }
+
+    atualizarVeiculos(dados){
+        let veiculos = dados.veiculo;
+        for (let i in veiculos){
+            const selecao = document.getElementById("veiculos-selecionar");
+            //let opcao = new Option(veiculos[i].descricao, veiculos[i].id);
+            selecao.add(new Option(veiculos[i].descricao, veiculos[i].id));
+        }
     }
 }
 
@@ -34,11 +129,11 @@ class Formulario{
 
     ler(){
         const conteudo = {
-            item: document.getElementById("item").value,
-            especificacaoKm: document.getElementById("especificacao-km").value,
-            especificacaoPrazo: document.getElementById("especificacao-prazo").value,
-            ultimaTrocaKm: document.getElementById("ultima-troca-km").value,
-            ultimaTrocaData: document.getElementById("ultima-troca-data").value,
+            descricao: document.getElementById("item").value,
+            intervalo_km: document.getElementById("especificacao-km").value,
+            intervalo_prazo: document.getElementById("especificacao-prazo").value,
+            ultima_troca_km: document.getElementById("ultima-troca-km").value,
+            ultima_roca_data: document.getElementById("ultima-troca-data").value,
         };
         return conteudo;
     }
@@ -56,14 +151,11 @@ class Formulario{
     }
 }
 
-
 class Tabela{
 
     constructor(){
         this.tabela = document.getElementById('tabela');
         this.tbody = this.tabela.querySelector("tbody");
-
-        this.init();
 
         // Delegação de eventos: escuta cliques no tbody
         this.tbody.addEventListener("click", (event) => {
@@ -72,35 +164,10 @@ class Tabela{
             }
 
             if (event.target.classList.contains("i-atualizar")) {
-                this.atualizarLinha(event.target, cabecalho.ler());
+                this.atualizarProximaTroca(event.target, cabecalho.ler());
             }
         });
     }
-
-    async init(){
-        const dados = await this.lerLista();
-        if (dados){
-            this.atualizarTabela(dados);
-        }
-    }
-    
-
-    async lerLista() {
-        try { 
-            const resposta = await fetch("http://127.0.0.1:5000/recuperar"); 
-            
-            if (!resposta.ok) { 
-                throw new Error("Erro na requisição: " + resposta.status); 
-            } 
-
-            const dados = await resposta.json(); 
-            return dados;
-        } 
-        catch (erro) { 
-            console.error("Falha ao recuperar lista:", erro);
-        } 
-    }
-   
 
     atualizarTabela(dados){
 
@@ -109,26 +176,25 @@ class Tabela{
             let valores = dados.itens[i];
             let id = valores.id;
             let descricao = valores.descricao;
-            let intervalo_km = valores.intervalo_km;
-            let intervalo_prazo = valores.intervalo_prazo;
-            let ultima_troca_km = valores.ultima_troca_km;
-            let ultima_troca_data = valores.ultima_troca_data;
+            let intervaloKm = valores.intervalo_km;
+            let intervaloPrazo = valores.intervalo_prazo;
+            let ultimaTrocaKm = valores.ultima_troca_km;
+            let ultimaTrocaData = valores.ultima_troca_data;
             let veiculo = valores.veiculo;
 
             let linha = document.getElementById('tabela').insertRow();
             this.incluirCelula(linha, 'id', id);
             this.incluirCelula(linha, 'item', descricao);
-            this.incluirCelula(linha, 'especificacao-km', intervalo_km);
-            this.incluirCelula(linha, 'prazo', intervalo_prazo);
-            this.incluirCelula(linha, 'ultima-km', ultima_troca_km);
-            this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(ultima_troca_data));
-            this.incluirCelula(linha, 'proxima-km', this.somarKm(ultima_troca_km, intervalo_km));
-            this.incluirCelula(linha, 'proxima-data', this.somarPrazo(intervalo_prazo, ultima_troca_data));
-            this.incluirCelula(linha, 'proxima-data', veiculo);
+            this.incluirCelula(linha, 'especificacao-km', intervaloKm);
+            this.incluirCelula(linha, 'prazo', intervaloPrazo);
+            this.incluirCelula(linha, 'ultima-km', ultimaTrocaKm);
+            this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(ultimaTrocaData));
+            this.incluirCelula(linha, 'proxima-km', this.somarKm(ultimaTrocaKm, intervaloKm));
+            this.incluirCelula(linha, 'proxima-data', this.somarPrazo(intervaloPrazo, ultimaTrocaData));
+            this.incluirCelula(linha, 'veiculo', veiculo);
             this.incluirCelula(linha, 'acoes', `<button class = "icone i-atualizar">
                 </button><button class = "icone i-deletar"></button>`);
         }
-
     }
 
     formatarDataBr(data){
@@ -167,63 +233,64 @@ class Tabela{
     }
 
     incluirLinha(linha, valores){
-        //let linha = document.getElementById('tabela').insertRow();
-        this.incluirCelula(linha, 'item', valores.item);
-        this.incluirCelula(linha, 'especificacao-km', valores.especificacaoKm);
-        this.incluirCelula(linha, 'prazo', valores.especificacaoPrazo);
-        this.incluirCelula(linha, 'ultima-km', valores.ultimaTrocaKm);
-        this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(valores.ultimaTrocaData));
-        this.incluirCelula(linha, 'proxima-km', this.somarKm(valores.especificacaoKm, valores.ultimaTrocaKm));
-        this.incluirCelula(linha, 'proxima-data', this.somarPrazo(valores.especificacaoPrazo, valores.ultimaTrocaData));
+        console.log(JSON.stringify(valores));
+        const resposta = api.salvarItem(valores);
+        id = resposta["id"];
+        console.log(id)
+
+
+
+        this.incluirCelula(linha, 'id', 0);
+        this.incluirCelula(linha, 'item', valores.descricao);
+        this.incluirCelula(linha, 'especificacao-km', valores.intervalo_km);
+        this.incluirCelula(linha, 'prazo', valores.intervalo_prazo);
+        this.incluirCelula(linha, 'ultima-km', valores.ultima_troca_Km);
+        this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(valores.ultima_troca_data));
+        this.incluirCelula(linha, 'proxima-km', this.somarKm(valores.intervalo_km, valores.ultima_troca_km));
+        this.incluirCelula(linha, 'proxima-data', this.somarPrazo(valores.intervalo_prazo, valores.ultima_troca_data));
+        this.incluirCelula(linha, 'veiculo', 1);
         this.incluirCelula(linha, 'acoes', '<button class = "icone i-atualizar"></button><button class = "icone i-deletar"></button>');
     }
-    
-    // Função para deletar uma linha
+
     deletarLinha(botao) {
         const linha = botao.closest("tr");
         const id = linha.cells[0].textContent;
-        this.deletarRegistro(id);
+        api.deletarItem(id);
         if (linha) {
             linha.remove();
         }
     }
 
-    atualizarLinha(botao, trocaAtual) {
+    lerLinha(linha){
+        const celulas = linha.querySelectorAll("td");
+
+        const valores = {
+            id: celulas[0].textContent,
+            descricao: celulas[1].textContent,
+            intervaloKm: celulas[2].textContent,
+            intervaloPrazo: celulas[3].textContent,
+            ultimaTrocaKm: celulas[4].textContent,
+            ultimaTrocaData: celulas[5].textContent,
+            veiculo: celulas[8].textContent,
+        }
+        return valores
+    }
+
+    atualizarProximaTroca(botao, trocaAtual) {
         const linha = botao.closest("tr");
         const celulas = linha.querySelectorAll("td");
 
-        const especificacaoKm =  celulas[2].textContent;
-        const especificacaoPrazo = celulas[3].textContent;
+        const especificacaoKm =  this.lerLinha(linha).intervaloKm;
+        const especificacaoPrazo = this.lerLinha(linha).intervaloPrazo;
 
         celulas[4].innerHTML = trocaAtual.km;
         celulas[5].innerHTML = this.formatarDataBr(trocaAtual.data);
         celulas[6].innerHTML = this.somarKm(trocaAtual.km, especificacaoKm);
         celulas[7].innerHTML = this.somarPrazo(especificacaoPrazo, trocaAtual.data); 
     }
-
-    // Função para deletar um registro pelo ID
-    async deletarRegistro(id) {
-        try {
-            const response = await fetch(`http://127.0.0.1:5000/deletar/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Accept": "application/json"
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Registro deletado com sucesso:", data);
-            } else {
-                console.error("Erro ao deletar registro:", response.status, response.statusText);
-            }
-        } catch (error) {
-            console.error("Erro na requisição:", error);
-        }
-    }
-
 }
 
+const api = new API();
 const cabecalho = new Cabecalho();
 const formulario = new Formulario();
 const tabela = new Tabela(formulario.ler());
