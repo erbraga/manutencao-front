@@ -88,12 +88,12 @@ class Tabela{
     async lerLista() {
         try { 
             const resposta = await fetch("http://127.0.0.1:5000/recuperar"); 
+            
             if (!resposta.ok) { 
                 throw new Error("Erro na requisição: " + resposta.status); 
             } 
+
             const dados = await resposta.json(); 
-            console.log("Lista recuperada:", dados); 
-            // você pode guardar os dados como propriedade da classe 
             return dados;
         } 
         catch (erro) { 
@@ -113,6 +113,7 @@ class Tabela{
             let intervalo_prazo = valores.intervalo_prazo;
             let ultima_troca_km = valores.ultima_troca_km;
             let ultima_troca_data = valores.ultima_troca_data;
+            let veiculo = valores.veiculo;
 
             let linha = document.getElementById('tabela').insertRow();
             this.incluirCelula(linha, 'id', id);
@@ -123,6 +124,7 @@ class Tabela{
             this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(ultima_troca_data));
             this.incluirCelula(linha, 'proxima-km', this.somarKm(ultima_troca_km, intervalo_km));
             this.incluirCelula(linha, 'proxima-data', this.somarPrazo(intervalo_prazo, ultima_troca_data));
+            this.incluirCelula(linha, 'proxima-data', veiculo);
             this.incluirCelula(linha, 'acoes', `<button class = "icone i-atualizar">
                 </button><button class = "icone i-deletar"></button>`);
         }
@@ -180,7 +182,7 @@ class Tabela{
     deletarLinha(botao) {
         const linha = botao.closest("tr");
         const id = linha.cells[0].textContent;
-        console.log(id)
+        this.deletarRegistro(id);
         if (linha) {
             linha.remove();
         }
@@ -190,14 +192,36 @@ class Tabela{
         const linha = botao.closest("tr");
         const celulas = linha.querySelectorAll("td");
 
-        const especificacaoKm =  celulas[1].textContent;
-        const especificacaoPrazo = celulas[2].textContent;
+        const especificacaoKm =  celulas[2].textContent;
+        const especificacaoPrazo = celulas[3].textContent;
 
-        celulas[3].innerHTML = trocaAtual.km;
-        celulas[4].innerHTML = this.formatarDataBr(trocaAtual.data);
-        celulas[5].innerHTML = this.somarKm(trocaAtual.km, especificacaoKm);
-        celulas[6].innerHTML = this.somarPrazo(especificacaoPrazo, trocaAtual.data); 
+        celulas[4].innerHTML = trocaAtual.km;
+        celulas[5].innerHTML = this.formatarDataBr(trocaAtual.data);
+        celulas[6].innerHTML = this.somarKm(trocaAtual.km, especificacaoKm);
+        celulas[7].innerHTML = this.somarPrazo(especificacaoPrazo, trocaAtual.data); 
     }
+
+    // Função para deletar um registro pelo ID
+    async deletarRegistro(id) {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/deletar/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Registro deletado com sucesso:", data);
+            } else {
+                console.error("Erro ao deletar registro:", response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+        }
+    }
+
 }
 
 const cabecalho = new Cabecalho();
