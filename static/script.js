@@ -27,7 +27,7 @@ class API{
         } 
     }
 
-    async salvarItem(item) {
+    async salvarItem(dados) {
         try {
             const response = await fetch("http://127.0.0.1:5000/salvar-item", {
                 method: "POST",
@@ -35,7 +35,30 @@ class API{
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(item)
+                body: JSON.stringify(dados)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro ao salvar: ${response.status} - ${response.statusText}`);
+            }
+
+            const resposta = await response.json();
+            return resposta;
+
+        } catch (erro) {
+            console.error("Erro na requisição:", erro);
+        }
+    }
+
+    async salvarVeiculo(dados) {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/salvar-veiculo", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dados)
             });
 
             if (!response.ok) {
@@ -52,6 +75,28 @@ class API{
 
     async alterarItem(id, dados) {
          try { const response = await fetch(`http://127.0.0.1:5000/alterar-item/${id}`, {
+             method: "PUT", headers: {
+                 "Accept": "application/json", 
+                 "Content-Type": "application/json" 
+                }, 
+                body: JSON.stringify(dados) 
+            }); 
+            if (!response.ok) {
+                 console.error("Erro ao alterar registro:",
+                     response.status, response.statusText); 
+                     return null; 
+            } 
+            const resultado = await response.json(); 
+            console.log("Registro alterado com sucesso:", resultado); 
+            return resultado; 
+        } catch (erro) {
+            console.error("Erro na requisição:", erro); 
+            return null; 
+        } 
+    }
+
+    async alterarVeiculo(id, dados) {
+         try { const response = await fetch(`http://127.0.0.1:5000/alterar-veiculo/${id}`, {
              method: "PUT", headers: {
                  "Accept": "application/json", 
                  "Content-Type": "application/json" 
@@ -95,21 +140,115 @@ class API{
 class Cabecalho{
     
     constructor(){
+        this.veiculo = document.getElementById("veiculos-selecionar");
+        this.btnIncluir =  document.getElementById("veiculo-btn-incluir");
+        this.btnEditar =  document.getElementById("veiculo-btn-editar");
+        this.btnCancelar =  document.getElementById("veiculo-btn-cancelar");
+        this.btnSalvar =  document.getElementById("veiculo-btn-salvar");
+        
         this.atualizarData();
         this.filtrarTabela();
+        this.incluirVeiculo();
+        this.editarVeiculo();
+        this.cancelarEdicao();
+        this.salvarVeiculo();
 
-
-        
-        
     }
 
     filtrarTabela(){
-        document.getElementById("veiculos-selecionar").addEventListener("change", function () {
-            const filtro = this.value; // valor selecionado
+        this.veiculo.addEventListener("change", function () {
+            const id = this.value;
             const linhas = document.querySelectorAll("#tabela tbody tr");
-            tabela.filtrar(filtro, linhas);
+            tabela.filtrar(id, linhas);
         });
     }
+
+    async incluirVeiculo(){
+        this.btnIncluir.addEventListener("click", (event) => {
+            document.getElementById("veiculo").value = "";
+            document.getElementById("veiculo-id").value = "#";
+
+            console.log(document.getElementById("veiculo").value);
+            console.log(document.getElementById("veiculo-id").value);
+
+            this.exibir(event, this.btnIncluir);
+            this.exibir(event, this.btnEditar);
+            this.exibir(event, this.btnCancelar);
+            this.exibir(event, this.btnSalvar);
+
+            this.exibir(event, document.getElementById("veiculos-selecionar"));
+            this.exibir(event, document.getElementById("veiculo"));
+
+        });
+    }
+
+    editarVeiculo(){
+        this.btnEditar.addEventListener("click", (event) => {
+            document.getElementById("veiculo").value = 
+                this.ler().veiculoDescricao;
+            document.getElementById("veiculo-id").value = 
+                this.ler().veiculoID;
+
+            console.log(document.getElementById("veiculo").value);
+            console.log(document.getElementById("veiculo-id").value);
+
+            this.exibir(event, this.btnIncluir);
+            this.exibir(event, this.btnEditar);
+            this.exibir(event, this.btnCancelar);
+            this.exibir(event, this.btnSalvar);
+
+            //let veiculo = document.getElementById("veiculo");
+            //veiculo.value = this.ler().veiculoDescricao;
+
+            this.exibir(event, document.getElementById("veiculos-selecionar"));
+            this.exibir(event, document.getElementById("veiculo"));
+
+        });
+    }
+    
+    cancelarEdicao(){
+        this.btnCancelar.addEventListener("click", (event) => {
+            this.exibir(event, this.btnIncluir);
+            this.exibir(event, this.btnEditar);
+            this.exibir(event, this.btnCancelar);
+            this.exibir(event, this.btnSalvar);
+
+            this.exibir(event, document.getElementById("veiculos-selecionar"));
+            this.exibir(event, document.getElementById("veiculo"));
+        });
+    }
+
+    salvarVeiculo(){
+        this.btnSalvar.addEventListener("click", (event) => {
+            const id = document.getElementById("veiculo-id").value;
+            const veiculo = {descricao: document.getElementById("veiculo").value};
+            
+            if (id == "#"){
+                api.salvarVeiculo(veiculo);
+            }
+            
+            
+            else {
+                api.alterarVeiculo(id, veiculo);
+            }
+            
+            
+        });
+    }
+
+    exibir(event, elemento){
+        let classes = elemento.classList;
+
+        if (classes.contains("invisivel-desktop")){
+            classes.replace("invisivel-desktop", "visivel-desktop");
+        }
+
+        else if (classes.contains("visivel-desktop")){
+            classes.replace("visivel-desktop", "invisivel-desktop");
+        }
+    }
+
+
 
     ler(){
         const conteudo = {
@@ -130,7 +269,6 @@ class Cabecalho{
         let veiculos = dados.veiculo;
         for (let i in veiculos){
             const selecao = document.getElementById("veiculos-selecionar");
-            //let opcao = new Option(veiculos[i].descricao, veiculos[i].id);
             selecao.add(new Option(veiculos[i].descricao, veiculos[i].id));
         }
     }
@@ -139,7 +277,6 @@ class Cabecalho{
 class Formulario{
 
     constructor(){
-        //let linha = document.getElementById('tabela').insertRow();
         this.formulario = document.getElementById('formulario');
         this.botao = document.getElementById('btnFormulario');
         this.botaoFlutuante = document.getElementById('botao-flutuante');
@@ -185,7 +322,6 @@ class Tabela{
         this.tabela = document.getElementById('tabela');
         this.tbody = this.tabela.querySelector("tbody");
 
-        // Delegação de eventos: escuta cliques no tbody
         this.tbody.addEventListener("click", (event) => {
             if (event.target.classList.contains("i-deletar")) {
                 this.deletarLinha(event.target);
