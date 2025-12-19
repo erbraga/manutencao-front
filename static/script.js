@@ -96,7 +96,19 @@ class Cabecalho{
     
     constructor(){
         this.atualizarData();
+        this.filtrarTabela();
 
+
+        
+        
+    }
+
+    filtrarTabela(){
+        document.getElementById("veiculos-selecionar").addEventListener("change", function () {
+            const filtro = this.value; // valor selecionado
+            const linhas = document.querySelectorAll("#tabela tbody tr");
+            tabela.filtrar(filtro, linhas);
+        });
     }
 
     ler(){
@@ -323,22 +335,21 @@ class Tabela{
         dados.proximaTrocaData = this.somarPrazo(dados.intervalo_prazo, trocaAtual.data);
 
         this.atualizarLinha(linha, dados);
-        
-        /*
-        const intervalo_km =  this.lerLinha(linha).intervalo_km;
-        const intervalo_prazo = this.lerLinha(linha).intervalo_prazo;
-        const ultima_troca_km = dados.ultima_troca_km;
-        const ultima_troca_data = this.formatarDataBr(dados.ultima_troca_data);
-        const proximaTrocaKm = this.somarKm(trocaAtual.km, intervalo_km);
-        const proximaTrocaData = this.somarPrazo(intervalo_prazo, trocaAtual.data);
-
-
-        celulas[4].innerHTML = ultima_troca_km
-        celulas[5].innerHTML = ultima_troca_data;
-        celulas[6].innerHTML = proximaTrocaKm;
-        celulas[7].innerHTML = proximaTrocaData; 
-        */
     }
+
+    filtrar(id, linhas){
+            linhas.forEach(linha => {
+            const valorColuna = linha.children[8].textContent;
+
+            if (id === "" || valorColuna === id) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        });
+
+    }
+
 }
 
 const api = new API();
