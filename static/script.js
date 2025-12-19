@@ -27,26 +27,6 @@ class API{
         } 
     }
 
-    async deletarItem(id) {
-        try {
-            const response = await fetch(`http://127.0.0.1:5000/deletar/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Accept": "application/json"
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Registro deletado com sucesso:", data);
-            } else {
-                console.error("Erro ao deletar registro:", response.status, response.statusText);
-            }
-        } catch (error) {
-            console.error("Erro na requisição:", error);
-        }
-    }
-
     async salvarItem(item) {
         try {
             const response = await fetch("http://127.0.0.1:5000/salvar-item", {
@@ -63,19 +43,53 @@ class API{
             }
 
             const resposta = await response.json();
-            console.log("Item salvo com sucesso:", resposta);
             return resposta;
 
         } catch (erro) {
             console.error("Erro na requisição:", erro);
+        }
     }
-}
 
+    async alterarItem(id, dados) {
+         try { const response = await fetch(`http://127.0.0.1:5000/alterar-item/${id}`, {
+             method: "PUT", headers: {
+                 "Accept": "application/json", 
+                 "Content-Type": "application/json" 
+                }, 
+                body: JSON.stringify(dados) 
+            }); 
+            if (!response.ok) {
+                 console.error("Erro ao alterar registro:",
+                     response.status, response.statusText); 
+                     return null; 
+            } 
+            const resultado = await response.json(); 
+            console.log("Registro alterado com sucesso:", resultado); 
+            return resultado; 
+        } catch (erro) {
+            console.error("Erro na requisição:", erro); 
+            return null; 
+        } 
+    }
 
+    async deletarItem(id) {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/deletar-item/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
 
-
-
-    
+            if (response.ok) {
+                const data = await response.json();
+            } else {
+                console.error("Erro ao deletar registro:", response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+        }
+    }
 }
 
 class Cabecalho{
@@ -133,7 +147,9 @@ class Formulario{
             intervalo_km: document.getElementById("especificacao-km").value,
             intervalo_prazo: document.getElementById("especificacao-prazo").value,
             ultima_troca_km: document.getElementById("ultima-troca-km").value,
-            ultima_roca_data: document.getElementById("ultima-troca-data").value,
+            ultima_troca_data: document.getElementById("ultima-troca-data").value,
+            veiculo: cabecalho.ler().veiculoID
+
         };
         return conteudo;
     }
@@ -232,24 +248,37 @@ class Tabela{
         cel.classList.add(classe);
     }
 
-    incluirLinha(linha, valores){
-        console.log(JSON.stringify(valores));
-        const resposta = api.salvarItem(valores);
-        id = resposta["id"];
-        console.log(id)
+    async incluirLinha(linha, valores){
 
+        const resposta = await api.salvarItem(valores);
 
+        if (valores){
+            const id = resposta["ID"];
+            this.incluirCelula(linha, 'id', id);
+            this.incluirCelula(linha, 'item', valores.descricao);
+            this.incluirCelula(linha, 'especificacao-km', valores.intervalo_km);
+            this.incluirCelula(linha, 'prazo', valores.intervalo_prazo);
+            this.incluirCelula(linha, 'ultima-km', valores.ultima_troca_km);
+            this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(valores.ultima_troca_data));
+            this.incluirCelula(linha, 'proxima-km', this.somarKm(valores.intervalo_km, valores.ultima_troca_km));
+            this.incluirCelula(linha, 'proxima-data', this.somarPrazo(valores.intervalo_prazo, valores.ultima_troca_data));
+            this.incluirCelula(linha, 'veiculo', valores.veiculo);
+            this.incluirCelula(linha, 'acoes', '<button class = "icone i-atualizar"></button><button class = "icone i-deletar"></button>');
+        }
+    }
 
-        this.incluirCelula(linha, 'id', 0);
-        this.incluirCelula(linha, 'item', valores.descricao);
-        this.incluirCelula(linha, 'especificacao-km', valores.intervalo_km);
-        this.incluirCelula(linha, 'prazo', valores.intervalo_prazo);
-        this.incluirCelula(linha, 'ultima-km', valores.ultima_troca_Km);
-        this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(valores.ultima_troca_data));
-        this.incluirCelula(linha, 'proxima-km', this.somarKm(valores.intervalo_km, valores.ultima_troca_km));
-        this.incluirCelula(linha, 'proxima-data', this.somarPrazo(valores.intervalo_prazo, valores.ultima_troca_data));
-        this.incluirCelula(linha, 'veiculo', 1);
-        this.incluirCelula(linha, 'acoes', '<button class = "icone i-atualizar"></button><button class = "icone i-deletar"></button>');
+    atualizarLinha(linha, valores){
+        const celulas = linha.querySelectorAll("td");
+        celulas[0].innerHTML = valores.id
+        celulas[1].innerHTML = valores.descricao
+        celulas[2].innerHTML = valores.intervalo_km
+        celulas[3].innerHTML = valores.intervalo_prazo
+        celulas[4].innerHTML = valores.ultima_troca_km
+        celulas[5].innerHTML = valores.ultima_troca_data;
+        celulas[6].innerHTML = valores.proximaTrocaKm;
+        celulas[7].innerHTML = valores.proximaTrocaData;
+        celulas[8].innerHTML = valores.veiculo
+        
     }
 
     deletarLinha(botao) {
@@ -267,10 +296,10 @@ class Tabela{
         const valores = {
             id: celulas[0].textContent,
             descricao: celulas[1].textContent,
-            intervaloKm: celulas[2].textContent,
-            intervaloPrazo: celulas[3].textContent,
-            ultimaTrocaKm: celulas[4].textContent,
-            ultimaTrocaData: celulas[5].textContent,
+            intervalo_km: celulas[2].textContent,
+            intervalo_prazo: celulas[3].textContent,
+            ultima_troca_km: celulas[4].textContent,
+            ultima_troca_data: celulas[5].textContent,
             veiculo: celulas[8].textContent,
         }
         return valores
@@ -280,13 +309,35 @@ class Tabela{
         const linha = botao.closest("tr");
         const celulas = linha.querySelectorAll("td");
 
-        const especificacaoKm =  this.lerLinha(linha).intervaloKm;
-        const especificacaoPrazo = this.lerLinha(linha).intervaloPrazo;
+        const dados = this.lerLinha(linha)
+        dados.ultima_troca_km = trocaAtual.km;
+        dados.ultima_troca_data = trocaAtual.data;
+        const id = dados.id;
+        delete dados.id;
 
-        celulas[4].innerHTML = trocaAtual.km;
-        celulas[5].innerHTML = this.formatarDataBr(trocaAtual.data);
-        celulas[6].innerHTML = this.somarKm(trocaAtual.km, especificacaoKm);
-        celulas[7].innerHTML = this.somarPrazo(especificacaoPrazo, trocaAtual.data); 
+        api.alterarItem(id, dados)
+
+        dados.id = id;
+        dados.ultima_troca_data = this.formatarDataBr(dados.ultima_troca_data);
+        dados.proximaTrocaKm = this.somarKm(trocaAtual.km, dados.intervalo_km);
+        dados.proximaTrocaData = this.somarPrazo(dados.intervalo_prazo, trocaAtual.data);
+
+        this.atualizarLinha(linha, dados);
+        
+        /*
+        const intervalo_km =  this.lerLinha(linha).intervalo_km;
+        const intervalo_prazo = this.lerLinha(linha).intervalo_prazo;
+        const ultima_troca_km = dados.ultima_troca_km;
+        const ultima_troca_data = this.formatarDataBr(dados.ultima_troca_data);
+        const proximaTrocaKm = this.somarKm(trocaAtual.km, intervalo_km);
+        const proximaTrocaData = this.somarPrazo(intervalo_prazo, trocaAtual.data);
+
+
+        celulas[4].innerHTML = ultima_troca_km
+        celulas[5].innerHTML = ultima_troca_data;
+        celulas[6].innerHTML = proximaTrocaKm;
+        celulas[7].innerHTML = proximaTrocaData; 
+        */
     }
 }
 
