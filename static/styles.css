@@ -254,7 +254,7 @@ table{
     width: 7rem;
 }
 
-.card, .botao-flutuante{
+.botao-flutuante{
     display: none;
 }
 
@@ -463,23 +463,6 @@ table{
         content: "\00a0km"
     }
 
-    /*
-    .especificacao-km::before{
-        content: "Trocar a cada:\a";
-        font-weight: bold;
-    }
-
-    .ultima-km::before{
-        content: "Última troca:";
-        font-weight: bold;
-    }
-
-    .proxima-km::before{
-        content: "Próxima troca:";
-        font-weight: bold;
-    }
-    */
-
     .prazo{
         display: grid;
         grid-column: 1;
@@ -540,36 +523,6 @@ table{
         min-width: 1rem;
         border: none;
     }
-
-    .card{
-        display: flex;
-        flex-direction: column;
-        margin: 1rem;
-        border-radius: 6px;
-    }
-
-    .card-corpo{
-        display: flex;
-        flex-direction: row;
-    }
-
-    .card-titulo{
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        padding: .5rem;
-        font-weight: bold;
-        text-align: left;
-        justify-content: space-between;
-    }
-
-    .card-col{
-        width: 50%;
-        padding: .5rem;
-        text-align: left;
-    }
-
-    
 
     .formulario{
         position: fixed;
@@ -664,7 +617,7 @@ table{
         height: 3rem;
     }
 
-    .card, .botao-flutuante{
+    .botao-flutuante{
         display: none;
     }
  }

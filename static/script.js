@@ -236,9 +236,7 @@ class Cabecalho{
     }
     
     cancelarEdicao(){
-        this.btnCancelar.addEventListener("click", (event) => {
-            this.alternarIcones(); 
-        });
+        this.alternarIcones(); 
     }
 
     async salvarVeiculo(){
@@ -264,9 +262,29 @@ class Cabecalho{
     }
 
     excluirVeiculo(){
-            if (this.ler().veiculoID == '#'){
-                alert('Selecione um veículo');
+            const erros = [];
+            const id = this.ler().veiculoID;
+            const linhas = document.querySelectorAll("#tabela tbody tr td:nth-child(9)");
+            console.log('id = ', id);
+
+            let j = 0;
+            for (let celula of linhas){
+                if (id == celula.textContent){
+                    j+=1;
+                }
             }
+            if (Number(j) == 0){
+                erros.push('\n\n* Não é possível excluir um veículo com ítens de manutnção cadastrados.');
+            }
+
+            if (this.ler().veiculoID == '#'){
+                erros.push('\n\n* Selecione um veículo');
+            }
+
+            if (erros.length != 0){
+                alert(erros);
+            }
+
             else{
             const id = this.ler().veiculoID
             api.deletarVeiculo(id);
@@ -361,7 +379,7 @@ class Tabela{
             let veiculo = valores.veiculo;
 
             let linha = document.getElementById('tabela').insertRow();
-            this.incluirCelula(linha, 'id', id);
+            this.incluirCelula(linha, 'invisivel-desktop', id);
             this.incluirCelula(linha, 'item', descricao);
             this.incluirCelula(linha, 'especificacao-km', intervaloKm);
             this.incluirCelula(linha, 'prazo', intervaloPrazo);
@@ -369,7 +387,7 @@ class Tabela{
             this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(ultimaTrocaData));
             this.incluirCelula(linha, 'proxima-km', this.somarKm(ultimaTrocaKm, intervaloKm));
             this.incluirCelula(linha, 'proxima-data', this.somarPrazo(intervaloPrazo, ultimaTrocaData));
-            this.incluirCelula(linha, 'veiculo', veiculo);
+            this.incluirCelula(linha, 'invisivel-desktop', veiculo);
             this.incluirCelula(linha, 'acoes', `<button class = "icone i-atualizar">
                 </button><button class = "icone i-deletar"></button>`);
         }
@@ -475,7 +493,7 @@ class Tabela{
 
         if (valores){
             const id = resposta["ID"];
-            this.incluirCelula(linha, 'id', id);
+            this.incluirCelula(linha, 'invisivel-desktop', id);
             this.incluirCelula(linha, 'item', valores.descricao);
             this.incluirCelula(linha, 'especificacao-km', valores.intervalo_km);
             this.incluirCelula(linha, 'prazo', valores.intervalo_prazo);
@@ -483,7 +501,7 @@ class Tabela{
             this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(valores.ultima_troca_data));
             this.incluirCelula(linha, 'proxima-km', this.somarKm(valores.intervalo_km, valores.ultima_troca_km));
             this.incluirCelula(linha, 'proxima-data', this.somarPrazo(valores.intervalo_prazo, valores.ultima_troca_data));
-            this.incluirCelula(linha, 'veiculo', valores.veiculo);
+            this.incluirCelula(linha, 'invisivel-desktop', valores.veiculo);
             this.incluirCelula(linha, 'acoes', '<button class = "icone i-atualizar"></button><button class = "icone i-deletar"></button>');
         }
     }
