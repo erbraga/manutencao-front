@@ -135,6 +135,25 @@ class API{
             console.error("Erro na requisição:", error);
         }
     }
+
+    async deletarVeiculo(id) {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/deletar-veiculo/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+            } else {
+                console.error("Erro ao deletar registro:", response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+        }
+    }
 }
 
 class Cabecalho{
@@ -145,110 +164,104 @@ class Cabecalho{
         this.btnEditar =  document.getElementById("veiculo-btn-editar");
         this.btnCancelar =  document.getElementById("veiculo-btn-cancelar");
         this.btnSalvar =  document.getElementById("veiculo-btn-salvar");
-        
+        this.btnExcluir =  document.getElementById("veiculo-btn-excluir");
+
         this.atualizarData();
-        this.filtrarTabela();
-        this.incluirVeiculo();
-        this.editarVeiculo();
-        this.cancelarEdicao();
-        this.salvarVeiculo();
 
-    }
+        this.veiculo.addEventListener("change", () => {
+            this.filtrarTabela();
+        });
 
-    filtrarTabela(){
-        this.veiculo.addEventListener("change", function () {
-            const id = this.value;
-            const linhas = document.querySelectorAll("#tabela tbody tr");
-            tabela.filtrar(id, linhas);
+        this.btnIncluir.addEventListener("click", (event) => {
+            this.incluirVeiculo();
+        });
+
+        this.btnEditar.addEventListener("click", (event) => {
+            this.editarVeiculo();
+        });
+
+        this.btnCancelar.addEventListener("click", (event) => {
+            this.cancelarEdicao();
+        });
+
+        this.btnSalvar.addEventListener("click", (event) => {
+            this.salvarVeiculo();
+        });
+        
+        this.btnExcluir.addEventListener("click", (event) => {
+            this.excluirVeiculo();
         });
     }
 
-    async incluirVeiculo(){
-        this.btnIncluir.addEventListener("click", (event) => {
+    filtrarTabela(){
+            const id = this.veiculo.value;
+            const linhas = document.querySelectorAll("#tabela tbody tr");
+            tabela.filtrar(id, linhas);
+    }
+
+    alternarIcones(){
+            ferramentas.alternarExibicao (this.btnIncluir);
+            ferramentas.alternarExibicao (this.btnEditar);
+            ferramentas.alternarExibicao (this.btnCancelar);
+            ferramentas.alternarExibicao (this.btnSalvar);
+            ferramentas.alternarExibicao (this.btnExcluir);
+            ferramentas.alternarExibicao (document.getElementById("veiculos-selecionar"));
+            ferramentas.alternarExibicao (document.getElementById("veiculo"));
+    }
+
+    incluirVeiculo(){
             document.getElementById("veiculo").value = "";
             document.getElementById("veiculo-id").value = "#";
 
             console.log(document.getElementById("veiculo").value);
             console.log(document.getElementById("veiculo-id").value);
 
-            this.exibir(event, this.btnIncluir);
-            this.exibir(event, this.btnEditar);
-            this.exibir(event, this.btnCancelar);
-            this.exibir(event, this.btnSalvar);
-
-            this.exibir(event, document.getElementById("veiculos-selecionar"));
-            this.exibir(event, document.getElementById("veiculo"));
-
-        });
+            this.alternarIcones();
     }
 
     editarVeiculo(){
-        this.btnEditar.addEventListener("click", (event) => {
             document.getElementById("veiculo").value = 
                 this.ler().veiculoDescricao;
             document.getElementById("veiculo-id").value = 
                 this.ler().veiculoID;
 
-            console.log(document.getElementById("veiculo").value);
-            console.log(document.getElementById("veiculo-id").value);
-
-            this.exibir(event, this.btnIncluir);
-            this.exibir(event, this.btnEditar);
-            this.exibir(event, this.btnCancelar);
-            this.exibir(event, this.btnSalvar);
-
-            //let veiculo = document.getElementById("veiculo");
-            //veiculo.value = this.ler().veiculoDescricao;
-
-            this.exibir(event, document.getElementById("veiculos-selecionar"));
-            this.exibir(event, document.getElementById("veiculo"));
-
-        });
+            this.alternarIcones();
     }
     
     cancelarEdicao(){
         this.btnCancelar.addEventListener("click", (event) => {
-            this.exibir(event, this.btnIncluir);
-            this.exibir(event, this.btnEditar);
-            this.exibir(event, this.btnCancelar);
-            this.exibir(event, this.btnSalvar);
-
-            this.exibir(event, document.getElementById("veiculos-selecionar"));
-            this.exibir(event, document.getElementById("veiculo"));
+            this.alternarIcones(); 
         });
     }
 
-    salvarVeiculo(){
-        this.btnSalvar.addEventListener("click", (event) => {
-            const id = document.getElementById("veiculo-id").value;
-            const veiculo = {descricao: document.getElementById("veiculo").value};
-            
-            if (id == "#"){
-                api.salvarVeiculo(veiculo);
+    async salvarVeiculo(){
+        let id = document.getElementById("veiculo-id").value;
+        const veiculo = {descricao: document.getElementById("veiculo").value};
+        
+        if (id == "#"){
+            const resposta = await api.salvarVeiculo(veiculo);
+            if (veiculo){
+                let id = Number(resposta["id"]);
+                
+                const selecao = document.getElementById("veiculos-selecionar");
+                selecao.add(new Option(veiculo.descricao, id));
+                selecao.value = id;
             }
-            
-            
-            else {
-                api.alterarVeiculo(id, veiculo);
-            }
-            
-            
-        });
-    }
-
-    exibir(event, elemento){
-        let classes = elemento.classList;
-
-        if (classes.contains("invisivel-desktop")){
-            classes.replace("invisivel-desktop", "visivel-desktop");
+        }
+        
+        else {
+            api.alterarVeiculo(id, veiculo);
         }
 
-        else if (classes.contains("visivel-desktop")){
-            classes.replace("visivel-desktop", "invisivel-desktop");
-        }
+        this.alternarIcones(); 
     }
 
-
+    excluirVeiculo(){
+        
+        const id = this.ler().veiculoID
+        api.deletarVeiculo(id);
+        document.getElementById("veiculos-selecionar").querySelector(`option[value = "${id}"]`).remove();
+    }
 
     ler(){
         const conteudo = {
@@ -303,7 +316,7 @@ class Formulario{
         return conteudo;
     }
 
-    exibir(event, formulario){
+    exibir(event,formulario){
         let classes = formulario.classList;
 
         if (classes.contains("invisivel")){
@@ -488,8 +501,25 @@ class Tabela{
 
 }
 
+
+class Ferramentas{
+    alternarExibicao(elemento){
+        let classes = elemento.classList;
+
+        if (classes.contains("invisivel-desktop")){
+            classes.replace("invisivel-desktop", "visivel-desktop");
+        }
+
+        else if (classes.contains("visivel-desktop")){
+            classes.replace("visivel-desktop", "invisivel-desktop");
+        }
+    }
+
+}
+
 const api = new API();
 const cabecalho = new Cabecalho();
 const formulario = new Formulario();
 const tabela = new Tabela(formulario.ler());
+const ferramentas = new Ferramentas();
 

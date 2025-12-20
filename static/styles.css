@@ -97,12 +97,19 @@ header{
 .form-veiculo-col1{
     display: flex;
     flex-direction: column;
+    width:100%;
 }
 
 .form-veiculo-inputs{
     width: 100%; 
     display: flex; 
     flex-direction: row;
+}
+
+.form-veiculo-botoes{
+    display: flex;
+    flex-direction: row;
+    width:fit-content;
 }
 
 .form-info{
@@ -307,31 +314,31 @@ table{
 
 
 .i-atualizar{
-    background-image: url("./fonts/refresh_48dp_0000F5.svg");
+    background-image: url("./icones/atualizar.svg");
 }
 
 .i-deletar{
-    background-image: url("./fonts/delete_48dp_EA3323.svg");
+    background-image: url("./icones/deletar.svg");
 }
 
 .i-adicionar{
-    background-image: url("./fonts/add_box_48dp_0000F5.svg");    
+    background-image: url("./icones/assignment_48dp_000000.svg");    
 }
 
 .i-incluir{
-    background-image: url("./fonts/add_box_48dp_000000.svg");    
+    background-image: url("./icones/incluir.svg");    
 }
 
 .i-editar{
-    background-image: url("./fonts/edit_48dp_0000F5.svg");    
+    background-image: url("./icones/editar.svg");    
 }
 
 .i-cancelar{
-    background-image: url("./fonts/edit_off_48dp_EA3323.svg");    
+    background-image: url("./icones/cancelar.svg");    
 }
 
 .i-salvar{
-    background-image: url("./fonts/save_48dp_0000F5(1).svg");    
+    background-image: url("./icones/salvar.svg");    
 }
 
 .invisivel-desktop{
@@ -585,7 +592,8 @@ table{
         position: fixed;
         bottom: 1rem;
         right: 1rem;
-        background-color: #ffffff;
+        background-color: transparent;
+        z-index: 9990;
         padding: 0;
         margin: 0;
         border-radius: 6px;

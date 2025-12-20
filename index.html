@@ -19,21 +19,25 @@
                             <label for="veiculo">Veículo:</label>
                             <div class="form-veiculo-inputs" >
                                 <div id="veiculo-id" class="invisivel"></div>
-                                <input type="text" id="veiculo" name ="veiculo" class="invisivel-desktop">
-                                <select id="veiculos-selecionar" class="visivel-desktop">
+                                <input type="text" id="veiculo" name ="veiculo" class="form-veiculo-inputs invisivel-desktop">
+                                <select id="veiculos-selecionar" class="form-veiculo-inputs visivel-desktop">
                                     <option value="">Selecione um veículo</option>
                                 </select>
 
                             </div>
                         </div>
-                        <button id="veiculo-btn-incluir" type="button" class = "cabecalho-btn i-incluir visivel-desktop">
-                        </button>
-                        <button id="veiculo-btn-editar" type="button" class = "cabecalho-btn i-editar visivel-desktop">
-                        </button>
-                        <button id="veiculo-btn-cancelar" type="button" class = "cabecalho-btn i-cancelar invisivel-desktop">
-                        </button>
-                        <button id="veiculo-btn-salvar" type="button" class = "cabecalho-btn i-salvar invisivel-desktop">
-                        </button>
+                        <div class="form-veiculo-botoes">
+                            <button id="veiculo-btn-incluir" type="button" class = "cabecalho-btn i-incluir visivel-desktop">
+                            </button>
+                            <button id="veiculo-btn-editar" type="button" class = "cabecalho-btn i-editar visivel-desktop">
+                            </button>
+                            <button id="veiculo-btn-cancelar" type="button" class = "cabecalho-btn i-cancelar invisivel-desktop">
+                            </button>
+                            <button id="veiculo-btn-salvar" type="button" class = "cabecalho-btn i-salvar invisivel-desktop">
+                            </button>
+                            <button id="veiculo-btn-excluir" type="button" class = "cabecalho-btn i-deletar visivel-desktop">
+                            </button>
+                        </div>
                     </form>
                     <form action=""  class="form-info">
                         <div class="form-info-col">
@@ -72,7 +76,7 @@
                 </div>
                 <div class="formulario-campos">
                     <button class="btn" type="button" id="btnFormulario">
-                        <img src="./static/fonts/upgrade_48dp_26A269.svg" alt="Novo item">
+                        <img src="./static/icones/novo.svg" alt="Novo item">
                         Novo item</button>
                 </div>
             </form>
