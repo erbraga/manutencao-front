@@ -1,6 +1,5 @@
 class API{
     constructor(){
-        //this.init();
     }
 
     async init(){
@@ -28,9 +27,25 @@ class API{
         } 
     }
 
-    async salvarItem(dados) {
+    async salvarVeiculo(veiculo){
+        const rota = "http://127.0.0.1:5000/salvar-veiculo";
+        const resposta = await this.salvar(veiculo, rota);
+        if (resposta){
+            return resposta;
+        }
+    }
+
+    async salvarItem(item){
+        const rota = "http://127.0.0.1:5000/salvar-item";
+        const resposta = await this.salvar(item, rota);
+        if (resposta){
+            return resposta;
+        }
+    }
+
+    async salvar(dados, rota) {
         try {
-            const response = await fetch("http://127.0.0.1:5000/salvar-item", {
+            const response = await fetch(rota, {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -51,53 +66,24 @@ class API{
         }
     }
 
-    async salvarVeiculo(dados) {
-        try {
-            const response = await fetch("http://127.0.0.1:5000/salvar-veiculo", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(dados)
-            });
-
-            if (!response.ok) {
-                throw new Error(`Erro ao salvar: ${response.status} - ${response.statusText}`);
-            }
-
-            const resposta = await response.json();
+    async alterarItem(id, item){
+        const rota = `http://127.0.0.1:5000/alterar-item/${id}`;
+        const resposta = await this.alterar(rota, item);
+        if (resposta){
             return resposta;
-
-        } catch (erro) {
-            console.error("Erro na requisição:", erro);
         }
     }
 
-    async alterarItem(id, dados) {
-         try { const response = await fetch(`http://127.0.0.1:5000/alterar-item/${id}`, {
-             method: "PUT", headers: {
-                 "Accept": "application/json", 
-                 "Content-Type": "application/json" 
-                }, 
-                body: JSON.stringify(dados) 
-            }); 
-            if (!response.ok) {
-                 console.error("Erro ao alterar registro:",
-                     response.status, response.statusText); 
-                     return null; 
-            } 
-            const resultado = await response.json(); 
-            console.log("Registro alterado com sucesso:", resultado); 
-            return resultado; 
-        } catch (erro) {
-            console.error("Erro na requisição:", erro); 
-            return null; 
-        } 
+    async alterarVeiculo(id, item){
+        const rota = `http://127.0.0.1:5000/alterar-veiculo/${id}`;
+        const resposta = await this.alterar(rota, item);
+        if (resposta){
+            return resposta;
+        }
     }
 
-    async alterarVeiculo(id, dados) {
-         try { const response = await fetch(`http://127.0.0.1:5000/alterar-veiculo/${id}`, {
+    async alterar(rota, dados) {
+         try { const response = await fetch(rota, {
              method: "PUT", headers: {
                  "Accept": "application/json", 
                  "Content-Type": "application/json" 
@@ -210,12 +196,13 @@ class Cabecalho{
             ferramentas.alternarExibicao (document.getElementById("veiculo"));
     }
 
+    listarVeiculos(){
+        const veiculos = this.veiculo
+    }
+
     incluirVeiculo(){
             document.getElementById("veiculo").value = "";
             document.getElementById("veiculo-id").value = "#";
-
-            console.log(document.getElementById("veiculo").value);
-            console.log(document.getElementById("veiculo-id").value);
 
             this.alternarIcones();
     }
@@ -239,26 +226,41 @@ class Cabecalho{
         this.alternarIcones(); 
     }
 
-    async salvarVeiculo(){
+    salvarVeiculo(){
+        
         let id = document.getElementById("veiculo-id").value;
         const veiculo = {descricao: document.getElementById("veiculo").value};
+        const selecao = document.getElementById("veiculos-selecionar");
+        const opcoes = [...document.querySelectorAll("#veiculos-selecionar option")]
+                .map(opt => opt.textContent);
+
+        console.log(typeof opcoes);
+        console.log('----------',opcoes.values());
+        console.log(veiculo.descricao);
         
-        if (id == "#"){
-            const resposta = await api.salvarVeiculo(veiculo);
-            if (veiculo){
+        if (opcoes.includes(veiculo.descricao)){
+            alert('* Já existe um veículo cadastrado com esse nome.')
+        }
+
+        else{
+
+            if (id == "#"){
+                //salvar novo veículo
+                const resposta = api.salvarVeiculo(veiculo);
                 let id = Number(resposta["id"]);
-                
-                const selecao = document.getElementById("veiculos-selecionar");
                 selecao.add(new Option(veiculo.descricao, id));
                 selecao.value = id;
             }
-        }
-        
-        else {
-            api.alterarVeiculo(id, veiculo);
-        }
+            
+            else {
+                //editar veículo existente
+                api.alterarVeiculo(id, veiculo);
+                document.querySelector(`#veiculos-selecionar option[value='${id}']`).
+                    textContent = veiculo.descricao;
+            }
 
-        this.alternarIcones(); 
+            this.alternarIcones();
+        }
     }
 
     excluirVeiculo(){
@@ -273,8 +275,8 @@ class Cabecalho{
                     j+=1;
                 }
             }
-            if (Number(j) == 0){
-                erros.push('\n\n* Não é possível excluir um veículo com ítens de manutnção cadastrados.');
+            if (Number(j) != 0){
+                erros.push('\n\n* Não é possível excluir um veículo com ítens de manutenção cadastrados.');
             }
 
             if (this.ler().veiculoID == '#'){
@@ -394,13 +396,17 @@ class Tabela{
     }
 
     filtrar(id, linhas){
+        console.log('id para filtro = ', id);
+        console.log('linhas = ', linhas);
         linhas.forEach(linha => {
-            const valorColuna = linha.children[8].textContent;
-
-            if (valorColuna === id) {
-                linha.style.display = "";
-            } else {
-                linha.style.display = "none";
+            
+            if (linha.children[8]){
+                const valorColuna = linha.children[8].textContent;
+                if (valorColuna === id) {
+                    linha.style.display = "";
+                } else {
+                    linha.style.display = "none";
+                }
             }
         });
     }
@@ -478,32 +484,32 @@ class Tabela{
             erros.push('\n\n* O campo data precisa ser preenchido com uma data válida.');
         }
 
-        if (erros.length == 0){
-            tabela.incluirLinha(linha, valores);
+        if (erros.length != 0){
+            alert(erros);
         }
 
         else{
-            alert(erros);
+            tabela.incluirLinha(linha, valores);
         }
     }
 
     async incluirLinha(linha, valores){
 
         const resposta = await api.salvarItem(valores);
+        const id = resposta["id"];
+        console.log("resposta: ",resposta);
+        console.log("id: ",id);
 
-        if (valores){
-            const id = resposta["ID"];
-            this.incluirCelula(linha, 'invisivel-desktop', id);
-            this.incluirCelula(linha, 'item', valores.descricao);
-            this.incluirCelula(linha, 'especificacao-km', valores.intervalo_km);
-            this.incluirCelula(linha, 'prazo', valores.intervalo_prazo);
-            this.incluirCelula(linha, 'ultima-km', valores.ultima_troca_km);
-            this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(valores.ultima_troca_data));
-            this.incluirCelula(linha, 'proxima-km', this.somarKm(valores.intervalo_km, valores.ultima_troca_km));
-            this.incluirCelula(linha, 'proxima-data', this.somarPrazo(valores.intervalo_prazo, valores.ultima_troca_data));
-            this.incluirCelula(linha, 'invisivel-desktop', valores.veiculo);
-            this.incluirCelula(linha, 'acoes', '<button class = "icone i-atualizar"></button><button class = "icone i-deletar"></button>');
-        }
+        this.incluirCelula(linha, 'invisivel-desktop', id);
+        this.incluirCelula(linha, 'item', valores.descricao);
+        this.incluirCelula(linha, 'especificacao-km', valores.intervalo_km);
+        this.incluirCelula(linha, 'prazo', valores.intervalo_prazo);
+        this.incluirCelula(linha, 'ultima-km', valores.ultima_troca_km);
+        this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(valores.ultima_troca_data));
+        this.incluirCelula(linha, 'proxima-km', this.somarKm(valores.intervalo_km, valores.ultima_troca_km));
+        this.incluirCelula(linha, 'proxima-data', this.somarPrazo(valores.intervalo_prazo, valores.ultima_troca_data));
+        this.incluirCelula(linha, 'invisivel-desktop', valores.veiculo);
+        this.incluirCelula(linha, 'acoes', '<button class = "icone i-atualizar"></button><button class = "icone i-deletar"></button>');
     }
 
     atualizarLinha(linha, valores){
