@@ -295,11 +295,11 @@ class Formulario{
         this.botaoFlutuante = document.getElementById('botao-flutuante');
         
         this.botao.addEventListener("click", (event) => {
-            tabela.incluirLinha(tabela.tabela.insertRow(), this.ler());
+            tabela.cadastrarItem(tabela.tabela.insertRow(), this.ler());
         });
 
         this.botaoFlutuante.addEventListener("click", (event) => {
-            this.exibir(event, this.formulario);
+            ferramentas.alternarExibicao(this.formulario);
         });
     }
 
@@ -314,18 +314,6 @@ class Formulario{
 
         };
         return conteudo;
-    }
-
-    exibir(event,formulario){
-        let classes = formulario.classList;
-
-        if (classes.contains("invisivel")){
-            classes.replace("invisivel", "visivel");
-        }
-
-        else if (classes.contains("visivel")){
-            classes.replace("visivel", "invisivel");
-        }
     }
 }
 
@@ -407,6 +395,53 @@ class Tabela{
         let cel = linha.insertCell();
         cel.innerHTML = conteudo;
         cel.classList.add(classe);
+    }
+
+    cadastrarItem(linha, valores){
+        const erros = [];
+
+        if (cabecalho.ler().veiculo ==''){
+            erros.push('* Selecione um veículo');
+        }
+
+        if (valores.descricao ==''){
+            erros.push('\n\n* O campo item precisa ser preenchido');
+        }
+
+        if (valores.intervalo_km == 0 || 
+            typeof Number(valores.intervalo_km) != 'number' ||
+            Number(valores.intervalo_km) <0 ||
+            Number(valores.intervalo_km) >999999
+        ){
+            erros.push('\n\n* O campo km para troca precisa ser preenchido com um número entre 0 e 999.999');
+        }
+
+        if (valores.intervalo_prazo == 0 || 
+            typeof Number(valores.intervalo_prazo) != 'number' ||
+            Number(valores.intervalo_prazo) <0 ||
+            Number(valores.intervalo_prazo) >240
+        ){
+            erros.push('\n\n* O campo prazo para troca precisa ser preenchido com um número entre 0 e 240');
+        }
+        if (valores.ultima_troca_km == 0 || 
+            typeof Number(valores.ultima_troca_km) != 'number' ||
+            Number(valores.ultima_troca_km) <0 ||
+            Number(valores.ultima_troca_km) >999999
+        ){
+            erros.push('\n\n* O campo km da última troca precisa ser preenchido com um número entre 0 e 999.999');
+        }
+
+        if (new Date(valores.ultima_troca_data) == "Invalid Date"){
+            erros.push('\n\n* O campo data precisa ser preenchido com uma data válida.');
+        }
+
+        if (erros.length == 0){
+            tabela.incluirLinha(linha, valores);
+        }
+
+        else{
+            alert(erros);
+        }
     }
 
     async incluirLinha(linha, valores){
