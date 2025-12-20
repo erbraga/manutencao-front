@@ -1,6 +1,6 @@
 class API{
     constructor(){
-        this.init();
+        //this.init();
     }
 
     async init(){
@@ -8,6 +8,7 @@ class API{
         if (dados){
             tabela.atualizarTabela(dados);
             cabecalho.atualizarVeiculos(dados)
+            cabecalho.filtrarTabela();
         }
     }
     
@@ -220,12 +221,18 @@ class Cabecalho{
     }
 
     editarVeiculo(){
-            document.getElementById("veiculo").value = 
-                this.ler().veiculoDescricao;
-            document.getElementById("veiculo-id").value = 
-                this.ler().veiculoID;
+            if (this.ler().veiculoID == '#'){
+                alert('Selecione um veículo');
+            }
+            else{
+            
+                document.getElementById("veiculo").value = 
+                    this.ler().veiculoDescricao;
+                document.getElementById("veiculo-id").value = 
+                    this.ler().veiculoID;
 
-            this.alternarIcones();
+                this.alternarIcones();
+            }
     }
     
     cancelarEdicao(){
@@ -257,10 +264,14 @@ class Cabecalho{
     }
 
     excluirVeiculo(){
-        
-        const id = this.ler().veiculoID
-        api.deletarVeiculo(id);
-        document.getElementById("veiculos-selecionar").querySelector(`option[value = "${id}"]`).remove();
+            if (this.ler().veiculoID == '#'){
+                alert('Selecione um veículo');
+            }
+            else{
+            const id = this.ler().veiculoID
+            api.deletarVeiculo(id);
+            document.getElementById("veiculos-selecionar").querySelector(`option[value = "${id}"]`).remove();
+        }
     }
 
     ler(){
@@ -323,6 +334,8 @@ class Tabela{
         this.tabela = document.getElementById('tabela');
         this.tbody = this.tabela.querySelector("tbody");
 
+        api.init();
+
         this.tbody.addEventListener("click", (event) => {
             if (event.target.classList.contains("i-deletar")) {
                 this.deletarLinha(event.target);
@@ -360,6 +373,18 @@ class Tabela{
             this.incluirCelula(linha, 'acoes', `<button class = "icone i-atualizar">
                 </button><button class = "icone i-deletar"></button>`);
         }
+    }
+
+    filtrar(id, linhas){
+        linhas.forEach(linha => {
+            const valorColuna = linha.children[8].textContent;
+
+            if (valorColuna === id) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        });
     }
 
     formatarDataBr(data){
@@ -400,7 +425,7 @@ class Tabela{
     cadastrarItem(linha, valores){
         const erros = [];
 
-        if (cabecalho.ler().veiculo ==''){
+        if (cabecalho.ler().veiculoID =='#'){
             erros.push('* Selecione um veículo');
         }
 
@@ -477,6 +502,8 @@ class Tabela{
         
     }
 
+
+
     deletarLinha(botao) {
         const linha = botao.closest("tr");
         const id = linha.cells[0].textContent;
@@ -502,38 +529,47 @@ class Tabela{
     }
 
     atualizarProximaTroca(botao, trocaAtual) {
+
+        const erros =[];
         const linha = botao.closest("tr");
-        const celulas = linha.querySelectorAll("td");
-
         const dados = this.lerLinha(linha)
-        dados.ultima_troca_km = trocaAtual.km;
-        dados.ultima_troca_data = trocaAtual.data;
-        const id = dados.id;
-        delete dados.id;
 
-        api.alterarItem(id, dados)
+        const data_proposta = new Date(trocaAtual.data);
+        const data_anterior = new Date(this.formatarDataISO(dados.ultima_troca_data));
+        
+        if (data_proposta < data_anterior) {
+            erros.push("* Não é possível registrar revisão anterior à última realizada");
+        }
 
-        dados.id = id;
-        dados.ultima_troca_data = this.formatarDataBr(dados.ultima_troca_data);
-        dados.proximaTrocaKm = this.somarKm(trocaAtual.km, dados.intervalo_km);
-        dados.proximaTrocaData = this.somarPrazo(dados.intervalo_prazo, trocaAtual.data);
+        if (new Date(data_proposta) == "Invalid Date"){
+            erros.push('* O campo data precisa ser preenchido com uma data válida');
+        }
 
-        this.atualizarLinha(linha, dados);
+        if (Number(trocaAtual.km) < Number(dados.ultima_troca_km)){
+            erros.push("\n\n* Não é possível registrar revisão com quilometragem inferior à última realizada.");
+        }
+
+        //console.log(data_proposta, data_anterior);
+
+        if (erros.length != 0){
+            alert(erros);
+        }
+        else{
+            dados.ultima_troca_km = trocaAtual.km;
+            dados.ultima_troca_data = trocaAtual.data;
+            const id = dados.id;
+            delete dados.id;
+
+            api.alterarItem(id, dados)
+
+            dados.id = id;
+            dados.ultima_troca_data = this.formatarDataBr(dados.ultima_troca_data);
+            dados.proximaTrocaKm = this.somarKm(trocaAtual.km, dados.intervalo_km);
+            dados.proximaTrocaData = this.somarPrazo(dados.intervalo_prazo, trocaAtual.data);
+
+            this.atualizarLinha(linha, dados);
+        }
     }
-
-    filtrar(id, linhas){
-            linhas.forEach(linha => {
-            const valorColuna = linha.children[8].textContent;
-
-            if (id === "" || valorColuna === id) {
-                linha.style.display = "";
-            } else {
-                linha.style.display = "none";
-            }
-        });
-
-    }
-
 }
 
 
