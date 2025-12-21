@@ -6,7 +6,7 @@ class API{
         const dados = await this.lerLista();
         if (dados){
             tabela.atualizarTabela(dados);
-            cabecalho.atualizarVeiculos(dados)
+            cabecalho.atualizarVeiculosSelecao(dados)
             cabecalho.filtrarTabela();
         }
     }
@@ -104,28 +104,25 @@ class API{
         } 
     }
 
-    async deletarItem(id) {
-        try {
-            const response = await fetch(`http://127.0.0.1:5000/deletar-item/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Accept": "application/json"
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-            } else {
-                console.error("Erro ao deletar registro:", response.status, response.statusText);
-            }
-        } catch (error) {
-            console.error("Erro na requisição:", error);
+    async deletarVeiculo(id){
+        const rota = `http://127.0.0.1:5000/deletar-veiculo/${id}`;
+        const resposta = await this.deletar(rota);
+        if (resposta){
+            return resposta;
         }
-    }
+    }    
 
-    async deletarVeiculo(id) {
+    async deletarItem(id){
+        const rota = `http://127.0.0.1:5000/deletar-item/${id}`;
+        const resposta = await this.deletar(rota);
+        if (resposta){
+            return resposta;
+        }
+    }   
+
+    async deletar(rota) {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/deletar-veiculo/${id}`, {
+            const response = await fetch(rota, {
                 method: "DELETE",
                 headers: {
                     "Accept": "application/json"
@@ -146,7 +143,9 @@ class API{
 class Cabecalho{
     
     constructor(){
-        this.veiculo = document.getElementById("veiculos-selecionar");
+        this.veiculoSelecionar = document.getElementById("veiculos-selecionar");
+        this.veiculo = document.getElementById("veiculo");
+        this.veiculoId = document.getElementById("veiculo-id");
         this.btnIncluir =  document.getElementById("veiculo-btn-incluir");
         this.btnEditar =  document.getElementById("veiculo-btn-editar");
         this.btnCancelar =  document.getElementById("veiculo-btn-cancelar");
@@ -155,7 +154,7 @@ class Cabecalho{
 
         this.atualizarData();
 
-        this.veiculo.addEventListener("change", () => {
+        this.veiculoSelecionar.addEventListener("change", () => {
             this.filtrarTabela();
         });
 
@@ -181,7 +180,7 @@ class Cabecalho{
     }
 
     filtrarTabela(){
-            const id = this.veiculo.value;
+            const id = this.veiculoSelecionar.value;
             const linhas = document.querySelectorAll("#tabela tbody tr");
             tabela.filtrar(id, linhas);
     }
@@ -192,18 +191,17 @@ class Cabecalho{
             ferramentas.alternarExibicao (this.btnCancelar);
             ferramentas.alternarExibicao (this.btnSalvar);
             ferramentas.alternarExibicao (this.btnExcluir);
-            ferramentas.alternarExibicao (document.getElementById("veiculos-selecionar"));
-            ferramentas.alternarExibicao (document.getElementById("veiculo"));
+            ferramentas.alternarExibicao (this.veiculoSelecionar);
+            ferramentas.alternarExibicao (this.veiculo);
     }
 
     listarVeiculos(){
-        const veiculos = this.veiculo
+        const veiculos = this.veiculoSelecionar
     }
 
     incluirVeiculo(){
-            document.getElementById("veiculo").value = "";
-            document.getElementById("veiculo-id").value = "#";
-
+            this.veiculo.value = "";
+            this.veiculoId.value = "#";
             this.alternarIcones();
     }
 
@@ -213,11 +211,8 @@ class Cabecalho{
             }
             else{
             
-                document.getElementById("veiculo").value = 
-                    this.ler().veiculoDescricao;
-                document.getElementById("veiculo-id").value = 
-                    this.ler().veiculoID;
-
+                this.veiculo.value = this.ler().veiculoDescricao;
+                this.veiculoId.value = this.ler().veiculoID;
                 this.alternarIcones();
             }
     }
@@ -228,20 +223,26 @@ class Cabecalho{
 
     salvarVeiculo(){
         
-        let id = document.getElementById("veiculo-id").value;
-        const veiculo = {descricao: document.getElementById("veiculo").value};
-        const selecao = document.getElementById("veiculos-selecionar");
+        let id = this.veiculoId.value;
+        const veiculo = {descricao: this.veiculo.value};
+        const selecao = this.veiculoSelecionar;
         const opcoes = [...document.querySelectorAll("#veiculos-selecionar option")]
                 .map(opt => opt.textContent);
-
-        console.log(typeof opcoes);
-        console.log('----------',opcoes.values());
-        console.log(veiculo.descricao);
         
+        console.log("A merda é ...",veiculo.descricao)
+
+        const erros = [];
         if (opcoes.includes(veiculo.descricao)){
-            alert('* Já existe um veículo cadastrado com esse nome.')
+            erros.push('* Já existe um veículo cadastrado com esse nome.')
         }
 
+        if (veiculo.descricao == ''){
+            erros.push('* Preencha o nome do veículo.')
+        }
+
+        if (erros.length > 0){
+            alert(erros);
+        }
         else{
 
             if (id == "#"){
@@ -258,7 +259,6 @@ class Cabecalho{
                 document.querySelector(`#veiculos-selecionar option[value='${id}']`).
                     textContent = veiculo.descricao;
             }
-
             this.alternarIcones();
         }
     }
@@ -267,7 +267,6 @@ class Cabecalho{
             const erros = [];
             const id = this.ler().veiculoID;
             const linhas = document.querySelectorAll("#tabela tbody tr td:nth-child(9)");
-            console.log('id = ', id);
 
             let j = 0;
             for (let celula of linhas){
@@ -290,14 +289,14 @@ class Cabecalho{
             else{
             const id = this.ler().veiculoID
             api.deletarVeiculo(id);
-            document.getElementById("veiculos-selecionar").querySelector(`option[value = "${id}"]`).remove();
+            this.veiculoSelecionar.querySelector(`option[value = "${id}"]`).remove();
         }
     }
 
     ler(){
         const conteudo = {
-            veiculoID: document.getElementById("veiculos-selecionar").selectedOptions[0].value,
-            veiculoDescricao: document.getElementById("veiculos-selecionar").selectedOptions[0].label,
+            veiculoID: this.veiculoSelecionar.selectedOptions[0].value,
+            veiculoDescricao: this.veiculoSelecionar.selectedOptions[0].label,
             data: document.getElementById("data").value,
             km: document.getElementById("km").value
         };
@@ -309,10 +308,10 @@ class Cabecalho{
         document.getElementById("data").value = dataAtual;
     }
 
-    atualizarVeiculos(dados){
+    atualizarVeiculosSelecao(dados){
         let veiculos = dados.veiculo;
         for (let i in veiculos){
-            const selecao = document.getElementById("veiculos-selecionar");
+            const selecao = this.veiculoSelecionar;
             selecao.add(new Option(veiculos[i].descricao, veiculos[i].id));
         }
     }
@@ -371,33 +370,24 @@ class Tabela{
 
         for (let i in dados.itens){
 
+            const linha = document.getElementById('tabela').insertRow();
             let valores = dados.itens[i];
-            let id = valores.id;
-            let descricao = valores.descricao;
-            let intervaloKm = valores.intervalo_km;
-            let intervaloPrazo = valores.intervalo_prazo;
-            let ultimaTrocaKm = valores.ultima_troca_km;
-            let ultimaTrocaData = valores.ultima_troca_data;
-            let veiculo = valores.veiculo;
+            const item = {
+                id: valores.id,
+                descricao: valores.descricao,
+                intervalo_km: valores.intervalo_km,
+                intervalo_prazo: valores.intervalo_prazo,
+                ultima_troca_km: valores.ultima_troca_km,
+                ultima_troca_data: valores.ultima_troca_data,
+                veiculo: valores.veiculo,
+            }
 
-            let linha = document.getElementById('tabela').insertRow();
-            this.incluirCelula(linha, 'invisivel-desktop', id);
-            this.incluirCelula(linha, 'item', descricao);
-            this.incluirCelula(linha, 'especificacao-km', intervaloKm);
-            this.incluirCelula(linha, 'prazo', intervaloPrazo);
-            this.incluirCelula(linha, 'ultima-km', ultimaTrocaKm);
-            this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(ultimaTrocaData));
-            this.incluirCelula(linha, 'proxima-km', this.somarKm(ultimaTrocaKm, intervaloKm));
-            this.incluirCelula(linha, 'proxima-data', this.somarPrazo(intervaloPrazo, ultimaTrocaData));
-            this.incluirCelula(linha, 'invisivel-desktop', veiculo);
-            this.incluirCelula(linha, 'acoes', `<button class = "icone i-atualizar">
-                </button><button class = "icone i-deletar"></button>`);
+            this.incluirLinha(linha, item);
+
         }
     }
 
     filtrar(id, linhas){
-        console.log('id para filtro = ', id);
-        console.log('linhas = ', linhas);
         linhas.forEach(linha => {
             
             if (linha.children[8]){
@@ -489,18 +479,23 @@ class Tabela{
         }
 
         else{
-            tabela.incluirLinha(linha, valores);
+            const resposta = this.salvarItem(linha, valores);
         }
     }
 
-    async incluirLinha(linha, valores){
-
+    async salvarItem(linha, valores){
         const resposta = await api.salvarItem(valores);
-        const id = resposta["id"];
-        console.log("resposta: ",resposta);
-        console.log("id: ",id);
+        if (resposta){
+            valores.id = resposta.id;
+            console.log(resposta);
+            tabela.incluirLinha(linha, valores);
+            return resposta
+        }
+    }
 
-        this.incluirCelula(linha, 'invisivel-desktop', id);
+    incluirLinha(linha, valores){
+        //const id = resposta["id"];
+        this.incluirCelula(linha, 'invisivel-desktop', valores.id);
         this.incluirCelula(linha, 'item', valores.descricao);
         this.incluirCelula(linha, 'especificacao-km', valores.intervalo_km);
         this.incluirCelula(linha, 'prazo', valores.intervalo_prazo);
@@ -523,15 +518,12 @@ class Tabela{
         celulas[6].innerHTML = valores.proximaTrocaKm;
         celulas[7].innerHTML = valores.proximaTrocaData;
         celulas[8].innerHTML = valores.veiculo
-        
     }
-
-
 
     deletarLinha(botao) {
         const linha = botao.closest("tr");
         const id = linha.cells[0].textContent;
-        api.deletarItem(id);
+        const resposta = api.deletarItem(id);
         if (linha) {
             linha.remove();
         }
@@ -571,9 +563,7 @@ class Tabela{
 
         if (Number(trocaAtual.km) < Number(dados.ultima_troca_km)){
             erros.push("\n\n* Não é possível registrar revisão com quilometragem inferior à última realizada.");
-        }
-
-        //console.log(data_proposta, data_anterior);
+        } 
 
         if (erros.length != 0){
             alert(erros);
@@ -584,7 +574,7 @@ class Tabela{
             const id = dados.id;
             delete dados.id;
 
-            api.alterarItem(id, dados)
+            const resposta = api.alterarItem(id, dados)
 
             dados.id = id;
             dados.ultima_troca_data = this.formatarDataBr(dados.ultima_troca_data);
@@ -595,7 +585,6 @@ class Tabela{
         }
     }
 }
-
 
 class Ferramentas{
     alternarExibicao(elemento){
@@ -609,7 +598,6 @@ class Ferramentas{
             classes.replace("visivel-desktop", "invisivel-desktop");
         }
     }
-
 }
 
 const api = new API();
@@ -617,4 +605,3 @@ const cabecalho = new Cabecalho();
 const formulario = new Formulario();
 const tabela = new Tabela(formulario.ler());
 const ferramentas = new Ferramentas();
-
