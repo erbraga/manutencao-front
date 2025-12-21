@@ -312,7 +312,6 @@ table{
 }
 
 
-
 .i-atualizar{
     background-image: url("./icones/atualizar.svg");
 }
@@ -322,7 +321,7 @@ table{
 }
 
 .i-adicionar{
-    background-image: url("./icones/assignment_48dp_000000.svg");    
+    background-image: url("./icones/formulario.svg");    
 }
 
 .i-incluir{
