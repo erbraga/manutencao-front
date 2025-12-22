@@ -5,8 +5,8 @@
 ## Descrição
 
 Este projeto foi produzido como entrega final do módulo **Desenvolvimento Full Stack Básico** do curso de **Especialização em Desenvovimento Web** da PUC Rio.
-Trata-se de um MVP (mímino produto viável) desenvolvido no formato SPA (Single page application ou aplicação em página única) com o objetivo de dar suporte à gestão de manutenções de veículos.
-A aplicação foi desenvolvida em conjunto com uma API que persiste os dados em um banco de dados em um servidor, no entanto, funciona perfeitamente off line, sem persistência dos dados.
+Trata-se de um MVP (mínimo produto viável) desenvolvido no formato SPA (Single page application ou aplicação em página única) com o objetivo de dar suporte à gestão de manutenções de veículos.
+Esta aplicação é uma página web desenvolvida em conjunto com uma API que persiste os dados em um banco de dados em um servidor, no entanto, funciona perfeitamente off line, porém sem persistência dos dados.
 
 <br>
 

@@ -63,6 +63,7 @@ class API{
 
         } catch (erro) {
             console.error("Erro na requisição:", erro);
+            return 'aplicativo offline';
         }
     }
 
@@ -96,7 +97,6 @@ class API{
                      return null; 
             } 
             const resultado = await response.json(); 
-            console.log("Registro alterado com sucesso:", resultado); 
             return resultado; 
         } catch (erro) {
             console.error("Erro na requisição:", erro); 
@@ -228,8 +228,6 @@ class Cabecalho{
         const selecao = this.veiculoSelecionar;
         const opcoes = [...document.querySelectorAll("#veiculos-selecionar option")]
                 .map(opt => opt.textContent);
-        
-        console.log("A merda é ...",veiculo.descricao)
 
         const erros = [];
         if (opcoes.includes(veiculo.descricao)){
@@ -247,10 +245,7 @@ class Cabecalho{
 
             if (id == "#"){
                 //salvar novo veículo
-                const resposta = api.salvarVeiculo(veiculo);
-                let id = Number(resposta["id"]);
-                selecao.add(new Option(veiculo.descricao, id));
-                selecao.value = id;
+                this.salvamento(selecao, veiculo);
             }
             
             else {
@@ -260,6 +255,32 @@ class Cabecalho{
                     textContent = veiculo.descricao;
             }
             this.alternarIcones();
+        }
+    }
+
+    async salvamento(selecao, veiculo){
+        const resposta = await api.salvarVeiculo(veiculo);
+        if (resposta){
+            let id = 0;
+            if (resposta == 'aplicativo offline'){
+                const ids = [...document.querySelectorAll("#veiculos-selecionar option")]
+                .map(opt => opt.value);
+                const numeros = ids.filter(item => !isNaN(item)).map(Number);
+                if (numeros.length == 0){
+                    id = 1;
+                }
+
+                else if (numeros.length > 0){
+                    const maior = Math.max(...numeros);
+                    id = maior + 1;
+                }
+            }
+            
+            else if (resposta != 'aplicativo offline') {
+                 id = Number(resposta["id"]);
+            }
+            selecao.add(new Option(veiculo.descricao, id));
+            selecao.value = id;
         }
     }
 
@@ -487,9 +508,8 @@ class Tabela{
         const resposta = await api.salvarItem(valores);
         if (resposta){
             valores.id = resposta.id;
-            console.log(resposta);
             tabela.incluirLinha(linha, valores);
-            return resposta
+            return resposta;
         }
     }
 
