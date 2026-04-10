@@ -24,6 +24,7 @@ class API{
         } 
         catch (erro) { 
             console.error("Falha ao recuperar lista:", erro);
+            ferramentas.exibirErroConexao();
         } 
     }
 
@@ -63,7 +64,9 @@ class API{
 
         } catch (erro) {
             console.error("Erro na requisição:", erro);
+            ferramentas.exibirErroConexao();
             return 'aplicativo offline';
+            
         }
     }
 
@@ -100,7 +103,9 @@ class API{
             return resultado; 
         } catch (erro) {
             console.error("Erro na requisição:", erro); 
-            return null; 
+            ferramentas.exibirErroConexao();
+            return null;
+            
         } 
     }
 
@@ -136,6 +141,7 @@ class API{
             }
         } catch (error) {
             console.error("Erro na requisição:", error);
+            ferramentas.exibirErroConexao();
         }
     }
 }
@@ -186,13 +192,13 @@ class Cabecalho{
     }
 
     alternarIcones(){
-            ferramentas.alternarExibicao (this.btnIncluir);
-            ferramentas.alternarExibicao (this.btnEditar);
-            ferramentas.alternarExibicao (this.btnCancelar);
-            ferramentas.alternarExibicao (this.btnSalvar);
-            ferramentas.alternarExibicao (this.btnExcluir);
-            ferramentas.alternarExibicao (this.veiculoSelecionar);
-            ferramentas.alternarExibicao (this.veiculo);
+            ferramentas.alternarExibicao (this.btnIncluir, "invisivel", "visivel");
+            ferramentas.alternarExibicao (this.btnEditar, "invisivel", "visivel");
+            ferramentas.alternarExibicao (this.btnCancelar, "invisivel", "visivel");
+            ferramentas.alternarExibicao (this.btnSalvar, "invisivel", "visivel");
+            ferramentas.alternarExibicao (this.btnExcluir, "invisivel", "visivel");
+            ferramentas.alternarExibicao (this.veiculoSelecionar, "invisivel", "visivel");
+            ferramentas.alternarExibicao (this.veiculo, "invisivel", "visivel");
     }
 
     listarVeiculos(){
@@ -244,12 +250,10 @@ class Cabecalho{
         else{
 
             if (id == "#"){
-                //salvar novo veículo
                 this.salvamento(selecao, veiculo);
             }
             
             else {
-                //editar veículo existente
                 api.alterarVeiculo(id, veiculo);
                 document.querySelector(`#veiculos-selecionar option[value='${id}']`).
                     textContent = veiculo.descricao;
@@ -350,7 +354,7 @@ class Formulario{
         });
 
         this.botaoFlutuante.addEventListener("click", (event) => {
-            ferramentas.alternarExibicao(this.formulario);
+            ferramentas.alternarExibicao(this.formulario, "invisivel", "visivel");
         });
     }
 
@@ -362,7 +366,6 @@ class Formulario{
             ultima_troca_km: document.getElementById("ultima-troca-km").value,
             ultima_troca_data: document.getElementById("ultima-troca-data").value,
             veiculo: cabecalho.ler().veiculoID
-
         };
         return conteudo;
     }
@@ -468,24 +471,21 @@ class Tabela{
             erros.push('\n\n* O campo item precisa ser preenchido');
         }
 
-        if (valores.intervalo_km == 0 || 
+        if (valores.intervalo_km <= 0 || 
             typeof Number(valores.intervalo_km) != 'number' ||
-            Number(valores.intervalo_km) <0 ||
             Number(valores.intervalo_km) >999999
         ){
-            erros.push('\n\n* O campo km para troca precisa ser preenchido com um número entre 0 e 999.999');
+            erros.push('\n\n* O campo km para troca precisa ser preenchido com um número entre 1 e 999.999');
         }
 
-        if (valores.intervalo_prazo == 0 || 
+        if (valores.intervalo_prazo <= 0 || 
             typeof Number(valores.intervalo_prazo) != 'number' ||
-            Number(valores.intervalo_prazo) <0 ||
             Number(valores.intervalo_prazo) >240
         ){
-            erros.push('\n\n* O campo prazo para troca precisa ser preenchido com um número entre 0 e 240');
+            erros.push('\n\n* O campo prazo para troca precisa ser preenchido com um número entre 1 e 240');
         }
-        if (valores.ultima_troca_km == 0 || 
+        if (Number(valores.ultima_troca_km) < 0 || 
             typeof Number(valores.ultima_troca_km) != 'number' ||
-            Number(valores.ultima_troca_km) <0 ||
             Number(valores.ultima_troca_km) >999999
         ){
             erros.push('\n\n* O campo km da última troca precisa ser preenchido com um número entre 0 e 999.999');
@@ -514,8 +514,7 @@ class Tabela{
     }
 
     incluirLinha(linha, valores){
-        //const id = resposta["id"];
-        this.incluirCelula(linha, 'invisivel-desktop', valores.id);
+        this.incluirCelula(linha, 'invisivel', valores.id);
         this.incluirCelula(linha, 'item', valores.descricao);
         this.incluirCelula(linha, 'especificacao-km', valores.intervalo_km);
         this.incluirCelula(linha, 'prazo', valores.intervalo_prazo);
@@ -523,7 +522,7 @@ class Tabela{
         this.incluirCelula(linha, 'ultima-data', this.formatarDataBr(valores.ultima_troca_data));
         this.incluirCelula(linha, 'proxima-km', this.somarKm(valores.intervalo_km, valores.ultima_troca_km));
         this.incluirCelula(linha, 'proxima-data', this.somarPrazo(valores.intervalo_prazo, valores.ultima_troca_data));
-        this.incluirCelula(linha, 'invisivel-desktop', valores.veiculo);
+        this.incluirCelula(linha, 'invisivel', valores.veiculo);
         this.incluirCelula(linha, 'acoes', '<button class = "icone i-atualizar"></button><button class = "icone i-deletar"></button>');
     }
 
@@ -607,17 +606,22 @@ class Tabela{
 }
 
 class Ferramentas{
-    alternarExibicao(elemento){
+    alternarExibicao(elemento, classe1, classe2){
         let classes = elemento.classList;
 
-        if (classes.contains("invisivel-desktop")){
-            classes.replace("invisivel-desktop", "visivel-desktop");
+        if (classes.contains(classe1)){
+            classes.replace(classe1, classe2);
         }
 
-        else if (classes.contains("visivel-desktop")){
-            classes.replace("visivel-desktop", "invisivel-desktop");
+        else if (classes.contains(classe2)){
+            classes.replace(classe2, classe1);
         }
     }
+
+    exibirErroConexao(){
+        alert("O App está off line, nenhuma alteração será salva");
+        }
+
 }
 
 const api = new API();

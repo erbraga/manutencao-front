@@ -47,7 +47,6 @@ input, select{
 }
 
 header{
-    background-color: #000000;
     margin: 1rem;
     grid-area: cab;
     display: flex;
@@ -265,7 +264,7 @@ table{
     padding: 0;
     border: none;
     background-color: transparent;
-    background-position: center; /* posição do ícone */
+    background-position: center;
     background-size: 100%;
     cursor: pointer;
 }
@@ -277,7 +276,7 @@ table{
     height: 4rem;
     padding: 0;
     background-color: var(--tabela-destaque);
-    background-position: center; /* posição do ícone */
+    background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
     align-items: center;
@@ -311,7 +310,6 @@ table{
     }
 }
 
-
 .i-atualizar{
     background-image: url("./icones/atualizar.svg");
 }
@@ -340,13 +338,13 @@ table{
     background-image: url("./icones/salvar.svg");    
 }
 
-.invisivel-desktop{
+.invisivel{
     display: none;
     bottom: 3rem;
 }
 
-.visivel-desktop{
-    display: grid;
+.visivel{
+    display: grid !important;
 }
 
 /*##################################################################*
@@ -354,15 +352,6 @@ table{
  *##################################################################*/
 
   @media ((max-width: 480px) and (orientation: portrait)){
-
-    .invisivel{
-        display: none;
-        bottom: 3rem;
-    }
-
-    .visivel{
-        display: grid;
-    }
 
     *{
         font-size: 12px;
@@ -375,6 +364,7 @@ table{
 
     header{
         margin: 1rem;
+        border-radius: 6px;
         flex-direction: column;
         justify-content: flex-start;
         gap: 0;
@@ -395,6 +385,7 @@ table{
 
     .cabecalho-titulo{
         width: 100%;
+        border-radius: 6px 6px 0 0;
     }
 
     .cabecalho-form{
@@ -423,6 +414,7 @@ table{
         display: none;
     }
 
+
     table{
 
         tr{
@@ -438,6 +430,7 @@ table{
         td{
             word-wrap: break-word;
         }
+
     }
 
     .item{
@@ -445,8 +438,6 @@ table{
         grid-column: 1 / 3;
         grid-row: 1;
         font-weight: bold;
-        
-
     }
 
     .especificacao-km{
@@ -478,7 +469,6 @@ table{
         grid-column: 2;
         grid-row: 2;
         display: inline-flex;
-
     }
 
     .ultima-data{
@@ -524,13 +514,13 @@ table{
     }
 
     .formulario{
+        display:none;
         position: fixed;
         top: 30vh;
-        left: 10%;
         z-index: 50;
         height: fit-content;
-        width: 80%;
-        margin: 0;
+        min-width: 94%;
+        margin-inline: 3%;
         border-radius: 6px;
     }
 
@@ -583,6 +573,7 @@ table{
         margin: 1rem;
         height: auto;
         overflow-y: auto;
+        
     }
 
     .sem-scroll{
