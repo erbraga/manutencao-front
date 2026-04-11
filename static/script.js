@@ -7,7 +7,7 @@ class API{
         if (dados){
             tabela.atualizarTabela(dados);
             cabecalho.atualizarVeiculosSelecao(dados)
-            cabecalho.filtrarTabela();
+            cabecalho.filtrarTabela("#");
         }
     }
     
@@ -161,7 +161,7 @@ class Cabecalho{
         this.atualizarData();
 
         this.veiculoSelecionar.addEventListener("change", () => {
-            this.filtrarTabela();
+            this.filtrarTabela(this.veiculoSelecionar.value);
         });
 
         this.btnIncluir.addEventListener("click", (event) => {
@@ -185,8 +185,7 @@ class Cabecalho{
         });
     }
 
-    filtrarTabela(){
-            const id = this.veiculoSelecionar.value;
+    filtrarTabela(id){
             const linhas = document.querySelectorAll("#tabela tbody tr");
             tabela.filtrar(id, linhas);
     }
@@ -201,14 +200,12 @@ class Cabecalho{
             ferramentas.alternarExibicao (this.veiculo, "invisivel", "visivel");
     }
 
-    listarVeiculos(){
-        const veiculos = this.veiculoSelecionar
-    }
-
     incluirVeiculo(){
             this.veiculo.value = "";
             this.veiculoId.value = "#";
             this.alternarIcones();
+            this.veiculo.focus();
+
     }
 
     editarVeiculo(){
@@ -220,6 +217,7 @@ class Cabecalho{
                 this.veiculo.value = this.ler().veiculoDescricao;
                 this.veiculoId.value = this.ler().veiculoID;
                 this.alternarIcones();
+                this.veiculo.focus();
             }
     }
     
@@ -259,6 +257,7 @@ class Cabecalho{
                     textContent = veiculo.descricao;
             }
             this.alternarIcones();
+            this.filtrarTabela(id);
         }
     }
 
